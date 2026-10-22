@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symphonia Mentis: Trias Pengetahuan (Filosofi, Psikologi & Fisika Kuantum)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- html2canvas untuk Export PNG Kartu Hasil -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cinzel"', 'serif'],
+          },
+          colors: {
+            darkbg: '#070a12',
+            cardbg: 'rgba(15, 23, 42, 0.75)',
+            philGold: '#F59E0B',
+            psyViolet: '#A855F7',
+            quaCyan: '#06B6D4',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Glassmorphism, 3D Flip Card & UI Styles -->
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #070a12; }
+    ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    /* Glassmorphism Styling */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+    .glass-nav {
+      background: rgba(7, 10, 18, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-input {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+    }
+    .glass-input:focus {
+      border-color: rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+    }
+
+    /* Glow Accents */
+    .glow-gold { box-shadow: 0 0 25px rgba(245, 158, 11, 0.25); border-color: rgba(245, 158, 11, 0.5); }
+    .glow-violet { box-shadow: 0 0 25px rgba(168, 85, 247, 0.25); border-color: rgba(168, 85, 247, 0.5); }
+    .glow-cyan { box-shadow: 0 0 25px rgba(6, 182, 212, 0.25); border-color: rgba(6, 182, 212, 0.5); }
+
+    /* Tab Switch Animations */
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 3D Flashcard Flip Styling */
+    .perspective-1000 { perspective: 1000px; }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 1.5rem;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Ambient Background Blobs */
+    @keyframes blobPulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.28; transform: scale(1.12); }
+    }
+    .animate-blob { animation: blobPulse 10s infinite ease-in-out; }
+
+    /* Knowledge Map Node pulse */
+    .node-pulse {
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { r: 18; opacity: 0.9; }
+      50% { r: 22; opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-darkbg text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-purple-500 selection:text-white">
+
+  <!-- Ambient Light Background Blobs -->
+  <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[160px] pointer-events-none animate-blob"></div>
+  <div class="fixed top-1/3 right-10 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none animate-blob" style="animation-delay: 3s;"></div>
+  <div class="fixed bottom-10 left-1/3 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none animate-blob" style="animation-delay: 6s;"></div>
+
+  <!-- STICKY NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('materi')">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-purple-500 to-cyan-500 p-[2px] shadow-lg shadow-purple-500/20">
+            <div class="w-full h-full bg-darkbg rounded-[14px] flex items-center justify-center">
+              <i class="fa-solid fa-atom text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-purple-400 to-cyan-400 text-xl"></i>
+            </div>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-amber-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent font-serif">
+              Symphonia Mentis
+            </span>
+            <span class="block text-[10px] tracking-widest text-slate-400 uppercase font-semibold">Trias Pengetahuan Utama</span>
+          </div>
+        </div>
+
+        <!-- Global Progress Tracker Center Pill -->
+        <div class="hidden xl:flex items-center space-x-3 bg-slate-900/90 px-4 py-2 rounded-2xl border border-white/10 shadow-inner">
+          <span class="text-xs text-slate-400 font-semibold"><i class="fa-solid fa-chart-line text-purple-400 mr-1.5"></i>Progres Global:</span>
+          <div class="w-28 bg-slate-800 rounded-full h-2 overflow-hidden border border-white/10">
+            <div id="nav-progress-bar" class="bg-gradient-to-r from-amber-400 via-purple-400 to-cyan-400 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+          </div>
+          <span id="nav-progress-text" class="text-xs font-extrabold text-amber-300">0 / 21 (0%)</span>
+        </div>
+
+        <!-- Quick Tools Bar (Ambient Audio, Glosarium, Badges, Backup) -->
+        <div class="hidden md:flex items-center space-x-2 bg-slate-900/90 px-3 py-1.5 rounded-2xl border border-white/10 shadow-inner">
+          <!-- Ambient Sound Control -->
+          <div class="relative group">
+            <button id="ambient-toggle-btn" onclick="toggleAmbientSound()" class="p-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-cyan-300 transition-all flex items-center gap-1.5" title="Ambient Focus Sound">
+              <i id="ambient-icon" class="fa-solid fa-headphones text-cyan-400"></i>
+              <span id="ambient-btn-label" class="hidden xl:inline text-[11px]">Focus Audio</span>
+            </button>
+            
+            <!-- Sound Dropdown Menu -->
+            <div class="absolute right-0 mt-2 w-56 glass-panel rounded-2xl p-3 shadow-2xl hidden group-hover:block z-50 border border-white/10 space-y-2">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Pilih Mode Suara Fokus:</span>
+              <button onclick="setAmbientType('rain')" class="w-full text-left px-2.5 py-1.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-cloud-rain text-cyan-400"></i> Suara Hujan & Pink Noise
+              </button>
+              <button onclick="setAmbientType('alpha')" class="w-full text-left px-2.5 py-1.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-wave-square text-purple-400"></i> Alpha Beats (10Hz Focus)
+              </button>
+              <button onclick="setAmbientType('theta')" class="w-full text-left px-2.5 py-1.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-brain text-amber-400"></i> Theta Beats (6Hz Meditasi)
+              </button>
+              <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+                <span class="text-[10px] text-slate-400">Volume</span>
+                <input type="range" id="ambient-volume-slider" min="0" max="1" step="0.05" value="0.3" oninput="setAmbientVolume(this.value)" class="w-24 accent-cyan-400">
+              </div>
+            </div>
+          </div>
+
+          <!-- Glossary Modal Trigger -->
+          <button onclick="openGlossaryModal()" class="p-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-amber-300 transition-all flex items-center gap-1.5" title="Kamus Istilah Cepat">
+            <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+            <span class="hidden xl:inline text-[11px]">Glosarium</span>
+          </button>
+
+          <!-- Badges Gallery Trigger -->
+          <button onclick="openBadgesModal()" class="p-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-purple-300 transition-all flex items-center gap-1.5" title="Lencana Pencapaian">
+            <i class="fa-solid fa-award text-purple-400"></i>
+            <span id="badges-unlocked-count" class="text-[11px] font-black text-amber-400">0/8</span>
+          </button>
+
+          <!-- Backup / Restore Trigger -->
+          <button onclick="openBackupModal()" class="p-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-emerald-300 transition-all flex items-center gap-1.5" title="Cadangan & Pemulihan Data">
+            <i class="fa-solid fa-database text-emerald-400"></i>
+          </button>
+        </div>
+
+        <!-- Desktop Nav Tabs -->
+        <nav class="hidden lg:flex space-x-1 bg-slate-900/80 p-1.5 rounded-2xl border border-white/10">
+          <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white bg-slate-800 border-white/10">
+            <i class="fa-solid fa-book-open text-amber-400"></i> Materi (21)
+          </button>
+          <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-clone text-purple-400"></i> Flashcards
+          </button>
+          <button onclick="switchTab('lab')" id="nav-lab" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-flask-vial text-cyan-400"></i> Lab Interaktif
+          </button>
+          <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-clipboard-question text-amber-300"></i> Kuis Diagnostik
+          </button>
+          <button onclick="switchTab('hasil')" id="nav-hasil" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-chart-radar text-emerald-400"></i> Lensa Kognitif
+          </button>
+          <button onclick="switchTab('jurnal')" id="nav-jurnal" class="nav-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-2 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-feather-pointed text-purple-300"></i> Jurnal
+          </button>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white p-2.5 rounded-xl bg-slate-800/60 border border-white/10">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu" class="hidden lg:hidden pb-4 pt-2 border-t border-white/10 flex flex-col space-y-2">
+        <div class="px-4 py-2 bg-slate-900/90 rounded-xl border border-white/10 mb-2 flex justify-between items-center">
+          <span class="text-xs text-slate-300 font-semibold">Progres Belajar:</span>
+          <span id="mobile-nav-progress-text" class="text-xs font-bold text-amber-400">0 / 21 Selesai (0%)</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2 mb-2">
+          <button onclick="openGlossaryModal(); toggleMobileMenu()" class="p-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300 flex flex-col items-center gap-1">
+            <i class="fa-solid fa-book-bookmark text-amber-400"></i> Glosarium
+          </button>
+          <button onclick="openBadgesModal(); toggleMobileMenu()" class="p-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300 flex flex-col items-center gap-1">
+            <i class="fa-solid fa-award text-purple-400"></i> Lencana
+          </button>
+          <button onclick="toggleAmbientSound()" class="p-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300 flex flex-col items-center gap-1">
+            <i class="fa-solid fa-headphones text-cyan-400"></i> Audio
+          </button>
+          <button onclick="openBackupModal(); toggleMobileMenu()" class="p-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300 flex flex-col items-center gap-1">
+            <i class="fa-solid fa-database text-emerald-400"></i> Backup
+          </button>
+        </div>
+        <button onclick="switchTab('materi'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-book-open text-amber-400"></i> Materi Deep-Dive (21 Modul)
+        </button>
+        <button onclick="switchTab('flashcards'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-clone text-purple-400"></i> Active Recall Flashcards
+        </button>
+        <button onclick="switchTab('lab'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-flask-vial text-cyan-400"></i> Lab Interaktif
+        </button>
+        <button onclick="switchTab('kuis'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-clipboard-question text-amber-300"></i> Kuis Diagnostik
+        </button>
+        <button onclick="switchTab('hasil'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-chart-radar text-emerald-400"></i> Lensa Kognitif & Rekomendasi
+        </button>
+        <button onclick="switchTab('jurnal'); toggleMobileMenu()" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/60 flex items-center gap-3">
+          <i class="fa-solid fa-feather-pointed text-purple-300"></i> Jurnal Refleksi
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+
+    <!-- HERO QUOTE GENERATOR BANNER -->
+    <div class="glass-panel rounded-3xl p-6 sm:p-8 mb-8 relative overflow-hidden border-t border-amber-500/30 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-slate-900/90">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex-1 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <i class="fa-solid fa-quote-left mr-1"></i> Kutipan Reflektif Harian
+            </span>
+            <span id="quote-figure-badge" class="text-xs font-bold text-slate-400">Socrates</span>
+          </div>
+          <p id="quote-text-display" class="text-sm sm:text-lg font-serif italic text-slate-100 leading-relaxed transition-opacity duration-300">
+            "Kehidupan yang tidak diperiksa dan tidak diuji adalah kehidupan yang tidak layak untuk dijalani."
+          </p>
+          <span id="quote-source-display" class="block text-xs font-semibold text-amber-400">
+            — Dialog Plato: Apology 38a
+          </span>
+        </div>
+
+        <button onclick="generateRandomQuote()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition-all flex items-center gap-2 shrink-0 shadow-lg shadow-amber-500/10">
+          <i class="fa-solid fa-shuffle"></i> Acak Kutipan Baru
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 1: MATERI DEEP-DIVE ================= -->
+    <section id="sec-materi" class="tab-content active">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Kompendium 21 Modul Pengetahuan
+          </h1>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">
+            Gunakan tombol <i class="fa-solid fa-volume-high text-cyan-400"></i> Audio Narasi untuk mendengarkan, dan tombol <i class="fa-solid fa-bookmark text-amber-400"></i> Tandai Selesai untuk melacak progres Anda.
+          </p>
+        </div>
+
+        <div class="bg-slate-900/80 p-3 rounded-2xl border border-white/10 flex items-center gap-4">
+          <div>
+            <span class="block text-[10px] text-slate-400 uppercase font-extrabold">Capaian Modul</span>
+            <span id="materi-progress-count" class="text-sm font-black text-amber-400">0 dari 21 Selesai</span>
+          </div>
+          <button onclick="resetAllModuleProgress()" class="px-2.5 py-1.5 rounded-xl text-[10px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/10" title="Reset Progres Belajar">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Domain Filter & Mode Toggle Controls + Font Size Adjuster -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterMateri('all')" id="mfilter-all" class="mfilter-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all border bg-slate-800 text-white border-white/20">
+            <i class="fa-solid fa-layer-group mr-1.5"></i> Semua (21)
+          </button>
+          <button onclick="filterMateri('filosofi')" id="mfilter-filosofi" class="mfilter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all border border-amber-500/20 bg-slate-900/60 text-slate-300 hover:text-amber-300">
+            <i class="fa-solid fa-scroll mr-1.5 text-amber-400"></i> Filosofi (7)
+          </button>
+          <button onclick="filterMateri('psikologi')" id="mfilter-psikologi" class="mfilter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all border border-purple-500/20 bg-slate-900/60 text-slate-300 hover:text-purple-300">
+            <i class="fa-solid fa-masks-theater mr-1.5 text-purple-400"></i> Psikologi (7)
+          </button>
+          <button onclick="filterMateri('kuantum')" id="mfilter-kuantum" class="mfilter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all border border-cyan-500/20 bg-slate-900/60 text-slate-300 hover:text-cyan-300">
+            <i class="fa-solid fa-atom mr-1.5 text-cyan-400"></i> Fisika Kuantum (7)
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Real-Time Search Bar -->
+          <div class="relative">
+            <input type="text" id="materi-search-input" oninput="filterMateri(activeDomainFilter)" placeholder="Cari modul atau konsep..." class="glass-input rounded-xl pl-9 pr-4 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none w-full sm:w-56">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+          </div>
+
+          <!-- Font Size Adjuster Controls -->
+          <div class="flex items-center bg-slate-950/80 px-2 py-1 rounded-2xl border border-white/10 shrink-0 gap-1 text-xs">
+            <span class="text-[10px] text-slate-400 font-bold px-1">Teks:</span>
+            <button onclick="adjustMateriFontSize(-1)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 font-extrabold text-slate-300" title="Kecilkan Teks">A-</button>
+            <button onclick="adjustMateriFontSize(0)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 font-bold text-slate-300 text-[10px]" title="Reset Ukuran">Reset</button>
+            <button onclick="adjustMateriFontSize(1)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 font-extrabold text-slate-300" title="Besarkan Teks">A+</button>
+          </div>
+
+          <!-- Global Level Mode Switcher -->
+          <div class="flex items-center bg-slate-950/80 p-1 rounded-2xl border border-white/10 shrink-0">
+            <button onclick="setGlobalMateriLevel('basic')" id="level-btn-basic" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-purple-600 text-white shadow-sm">
+              Tingkat Umum
+            </button>
+            <button onclick="setGlobalMateriLevel('advanced')" id="level-btn-advanced" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white">
+              Tingkat Mendalam
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="materi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================= SECTION 2: ACTIVE RECALL FLASHCARDS ================= -->
+    <section id="sec-flashcards" class="tab-content">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <div class="glass-panel rounded-3xl p-6 text-center border-t border-purple-500/30">
+          <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-purple-500/10 text-purple-300 border border-purple-500/20 mb-3 inline-block">
+            <i class="fa-solid fa-brain mr-1.5"></i> Metode Active Recall & Repetisi Spasial
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">System Flashcards Trias Pengetahuan</h2>
+          <p class="text-xs text-slate-300 mt-2 max-w-xl mx-auto">
+            Uji pemahaman memori jangka panjang Anda terhadap istilah-istilah kunci filosofi, psikologi, dan kuantum. Klik pada kartu untuk membalikkan jawaban.
+          </p>
+
+          <div class="flex justify-center items-center gap-6 mt-4 text-xs font-bold text-slate-400">
+            <span id="fc-progress-text">Kartu 1 dari 15</span>
+            <span id="fc-mastered-text" class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>0 Dikuasai</span>
+          </div>
+        </div>
+
+        <div class="perspective-1000 w-full h-80 sm:h-96">
+          <div id="flashcard-inner" class="flip-card-inner cursor-pointer" onclick="toggleFlashcardFlip()">
+            
+            <!-- CARD FRONT -->
+            <div class="flip-card-front glass-panel p-8 flex flex-col justify-between items-center border-t-2 border-purple-500/50 bg-gradient-to-b from-slate-900/90 to-slate-900/95 shadow-2xl">
+              <div class="w-full flex justify-between items-center">
+                <span id="fc-category-badge" class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  Filosofi
+                </span>
+                <span id="fc-mastered-badge" class="hidden px-2.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <i class="fa-solid fa-check mr-1"></i> Dikuasai
+                </span>
+              </div>
+
+              <div class="text-center my-auto space-y-3">
+                <h3 id="fc-term-front" class="text-2xl sm:text-4xl font-extrabold text-white font-serif tracking-tight">
+                  Aporia
+                </h3>
+                <p id="fc-prompt-front" class="text-xs text-slate-400 font-medium">
+                  Apa arti dan peran penting istilah ini dalam Dialektika Sokratik?
+                </p>
+              </div>
+
+              <div class="text-[11px] font-semibold text-purple-400 flex items-center gap-2">
+                <i class="fa-solid fa-rotate mr-1"></i> Klik kartu untuk membalikkan jawaban
+              </div>
+            </div>
+
+            <!-- CARD BACK -->
+            <div class="flip-card-back glass-panel p-8 flex flex-col justify-between items-center border-t-2 border-cyan-500/50 bg-gradient-to-b from-slate-950 to-slate-900/95 shadow-2xl">
+              <div class="w-full flex justify-between items-center">
+                <span id="fc-category-badge-back" class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                  Penjelasan Konsep
+                </span>
+                <span class="text-[10px] text-slate-500 font-semibold">Definisi Akademis</span>
+              </div>
+
+              <div class="text-left my-auto space-y-3">
+                <h4 id="fc-term-back" class="text-lg font-bold text-cyan-300">
+                  Kebuntuan Kognitif Konstruktif
+                </h4>
+                <p id="fc-desc-back" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  Kondisi kebingungan sewaktu asumsi pra-reflektif dibuktikan kontradiktif. Aporia adalah purgasi mental yang membebaskan jiwa dari kesombongan opini palsu.
+                </p>
+                <div class="p-3 rounded-xl bg-slate-950/60 border border-white/5 text-[11px] text-slate-400">
+                  <strong class="text-amber-400 block mb-0.5">Implikasi Kunci:</strong>
+                  <span id="fc-takeaway-back">Awal lahirnya kebenaran sejati dari dalam jiwa.</span>
+                </div>
+              </div>
+
+              <div class="text-[11px] font-semibold text-slate-400 flex items-center gap-2">
+                <i class="fa-solid fa-rotate mr-1"></i> Klik untuk membalikkan kembali
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl flex flex-wrap justify-between items-center gap-3">
+          <div class="flex items-center gap-2">
+            <button onclick="prevFlashcard()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10">
+              <i class="fa-solid fa-arrow-left mr-1.5"></i> Sebelum
+            </button>
+            <button onclick="nextFlashcard()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10">
+              Lanjut <i class="fa-solid fa-arrow-right ml-1.5"></i>
+            </button>
+          </div>
+
+          <button onclick="toggleMasteredFlashcard()" id="fc-toggle-mastered-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30">
+            <i class="fa-solid fa-check mr-1.5"></i> Tandai Dikuasai
+          </button>
+
+          <button onclick="shuffleFlashcards()" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 hover:bg-purple-500/30">
+            <i class="fa-solid fa-shuffle mr-1.5"></i> Acak Kartu
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3: LAB INTERAKTIF ================= -->
+    <section id="sec-lab" class="tab-content">
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <button onclick="switchLab('doubleslit')" id="labtab-doubleslit" class="lab-btn active px-4 py-2.5 rounded-2xl text-xs font-bold transition-all border bg-cyan-500/20 text-cyan-300 border-cyan-500/40 glow-cyan">
+          <i class="fa-solid fa-wave-square mr-2"></i> Celah Ganda Kuantum
+        </button>
+        <button onclick="switchLab('jungian')" id="labtab-jungian" class="lab-btn px-4 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/10 bg-slate-900/60 text-slate-300 hover:text-purple-300">
+          <i class="fa-solid fa-brain mr-2 text-purple-400"></i> Peta Psikhe Jungian
+        </button>
+        <button onclick="switchLab('elenchus')" id="labtab-elenchus" class="lab-btn px-4 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/10 bg-slate-900/60 text-slate-300 hover:text-amber-300">
+          <i class="fa-solid fa-comments mr-2 text-amber-400"></i> Dialektika Sokratik
+        </button>
+        <button onclick="switchLab('knowledge-map')" id="labtab-knowledge-map" class="lab-btn px-4 py-2.5 rounded-2xl text-xs font-bold transition-all border border-white/10 bg-slate-900/60 text-slate-300 hover:text-emerald-300">
+          <i class="fa-solid fa-diagram-project mr-2 text-emerald-400"></i> Peta Sintergi Pengetahuan
+        </button>
+      </div>
+
+      <!-- LAB 1: CANVAS SIMULASI CELAH GANDA -->
+      <div id="lab-doubleslit" class="lab-content">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border-t border-cyan-500/30">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+            <div>
+              <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-2 inline-block">
+                Eksperimen Fisika Subatomik Real-Time
+              </span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">Laboratorium Simulasi Celah Ganda (Double-Slit)</h2>
+              <p class="text-xs text-slate-300 mt-1">
+                Amati bagaimana foton/elektron bertindak sebagai <strong class="text-cyan-400">Gelombang Interferensi</strong> saat tanpa pengamat, dan seketika meruntuhkan fungsi gelombang (Ψ) menjadi <strong class="text-amber-400">Partikel Padat</strong> saat Pengamat aktif!
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 bg-slate-950/60 p-3 rounded-2xl border border-white/10">
+              <button id="btn-toggle-observer" onclick="toggleObserver()" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30">
+                <i class="fa-solid fa-eye-slash mr-1.5"></i> Pengamat (Observer): OFF
+              </button>
+              <button onclick="resetCanvasSim()" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                <i class="fa-solid fa-rotate-left mr-1"></i> Reset Screen
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl flex justify-center">
+            <canvas id="canvasDoubleSlit" width="800" height="380" class="w-full max-w-full h-auto cursor-crosshair"></canvas>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            <div class="bg-slate-900/60 p-3 rounded-xl border border-white/5 text-center">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Foton Terpancar</span>
+              <span id="stat-photons" class="text-base font-extrabold text-cyan-400">0</span>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-xl border border-white/5 text-center">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Status Pengamat</span>
+              <span id="stat-observer-text" class="text-base font-extrabold text-rose-400">OFF (Potensi)</span>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-xl border border-white/5 text-center">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Pola Deteksi</span>
+              <span id="stat-pattern-text" class="text-base font-extrabold text-purple-400">Pola Interferensi</span>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-xl border border-white/5 text-center">
+              <span class="block text-[10px] text-slate-400 uppercase font-semibold">Fungsi Gelombang (Ψ)</span>
+              <span id="stat-psi-text" class="text-base font-extrabold text-amber-400">Superposisi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 2: JUNGIAN PSYCHE EXPLORER -->
+      <div id="lab-jungian" class="lab-content hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border-t border-purple-500/30">
+          <div class="mb-6">
+            <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-2 inline-block">
+              Psikologi Kedalaman
+            </span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Explorer Peta Arsitektur Psikhe Jungian</h2>
+            <p class="text-xs text-slate-300 mt-1">Klik pada zona konsentris peta jiwa di bawah untuk membedah struktur kesadaran, persona, shadow, anima/animus, hingga ketidaksadaran kolektif.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-6 flex justify-center">
+              <div class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full border-2 border-dashed border-purple-500/30 flex items-center justify-center p-4 bg-slate-950/80 shadow-2xl">
+                <div onclick="selectJungZone('collective')" class="jung-zone absolute inset-2 rounded-full border border-purple-500/20 bg-purple-950/20 hover:bg-purple-900/30 transition-all cursor-pointer flex items-start justify-center pt-2">
+                  <span class="text-[10px] font-extrabold tracking-widest text-purple-400 uppercase">Ketidaksadaran Kolektif</span>
+                </div>
+                <div onclick="selectJungZone('shadow')" class="jung-zone absolute inset-12 rounded-full border border-rose-500/30 bg-rose-950/30 hover:bg-rose-900/40 transition-all cursor-pointer flex items-start justify-center pt-2">
+                  <span class="text-[10px] font-extrabold tracking-widest text-rose-300 uppercase">Shadow & Anima/Animus</span>
+                </div>
+                <div onclick="selectJungZone('persona')" class="jung-zone absolute inset-24 rounded-full border border-amber-500/40 bg-amber-950/30 hover:bg-amber-900/40 transition-all cursor-pointer flex items-start justify-center pt-2">
+                  <span class="text-[10px] font-extrabold tracking-widest text-amber-300 uppercase">Persona (Topeng Sosial)</span>
+                </div>
+                <div onclick="selectJungZone('ego')" class="jung-zone absolute inset-36 rounded-full border-2 border-cyan-400 bg-cyan-950/60 hover:bg-cyan-900/70 transition-all cursor-pointer flex items-center justify-center text-center p-2 shadow-lg glow-cyan">
+                  <span class="text-xs font-black tracking-wider text-cyan-200 uppercase">EGO / THE SELF</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6">
+              <div id="jung-detail-box" class="glass-panel rounded-2xl p-6 border-l-4 border-purple-500 bg-slate-900/80">
+                <!-- JS Rendered -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 3: SOCRATIC ELENCHUS SIMULATOR -->
+      <div id="lab-elenchus" class="lab-content hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border-t border-amber-500/30">
+          <div class="mb-6">
+            <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-2 inline-block">
+              Dialektika Sokratik
+            </span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Simulator Uji Premis Sokratik (Aporia Quest)</h2>
+            <p class="text-xs text-slate-300 mt-1">Pilihlah asumsi awal Anda tentang nilai hidup, dan biarkan Socrates menguji kontradiksinya hingga Anda mencapai kondisi Kebingungan Konstruktif (Aporia).</p>
+          </div>
+
+          <div class="max-w-2xl mx-auto">
+            <div id="socratic-dialogue-card" class="glass-panel rounded-2xl p-6 sm:p-8 border border-white/10 relative">
+              <!-- JS Rendered -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 4: PETA SINTERGI PENGETAHUAN (KNOWLEDGE NETWORK MAP) -->
+      <div id="lab-knowledge-map" class="lab-content hidden">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border-t border-emerald-500/30 space-y-6">
+          <div>
+            <span class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2 inline-block">
+              Peta Jejaring Konsep Inter-Disiplin
+            </span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Visualisasi Sintergi Trias Pengetahuan</h2>
+            <p class="text-xs text-slate-300 mt-1">Klik pada simpul (node) atau garis keterhubungan untuk membongkar bagaimana Filosofi Sokratik, Psikologi Jungian, dan Fisika Kuantum saling menjelaskan satu sama lain.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <!-- SVG Interactive Map Left -->
+            <div class="lg:col-span-7 bg-slate-950 p-4 rounded-2xl border border-white/10 flex justify-center items-center shadow-2xl relative overflow-hidden">
+              <svg id="knowledgeMapSvg" width="460" height="340" viewBox="0 0 460 340" class="w-full h-auto cursor-pointer">
+                <!-- Links / Connection Lines -->
+                <line x1="80" y1="90" x2="230" y2="70" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" onclick="selectMapLink('link1')" class="hover:stroke-amber-300 cursor-pointer"/>
+                <line x1="230" y1="70" x2="380" y2="90" stroke="#A855F7" stroke-width="2" stroke-dasharray="4,4" onclick="selectMapLink('link2')" class="hover:stroke-purple-300 cursor-pointer"/>
+                <line x1="80" y1="90" x2="130" y2="240" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4,4" onclick="selectMapLink('link3')" class="hover:stroke-cyan-300 cursor-pointer"/>
+                <line x1="230" y1="70" x2="310" y2="250" stroke="#10B981" stroke-width="2.5" onclick="selectMapLink('link4')" class="hover:stroke-emerald-300 cursor-pointer"/>
+                <line x1="130" y1="240" x2="310" y2="250" stroke="#6366F1" stroke-width="2" onclick="selectMapLink('link5')" class="hover:stroke-indigo-300 cursor-pointer"/>
+
+                <!-- Nodes -->
+                <!-- Node 1: Aporia (Filosofi) -->
+                <g onclick="selectMapNode('aporia')" class="cursor-pointer group">
+                  <circle cx="80" cy="90" r="18" fill="#F59E0B" opacity="0.85" class="node-pulse"/>
+                  <text x="80" y="94" fill="#070a12" font-size="10" font-weight="extrabold" text-anchor="middle">FIL</text>
+                  <text x="80" y="122" fill="#F59E0B" font-size="11" font-weight="bold" text-anchor="middle">Aporia</text>
+                </g>
+
+                <!-- Node 2: Dunia Ide / Forms (Filosofi) -->
+                <g onclick="selectMapNode('forms')" class="cursor-pointer group">
+                  <circle cx="230" cy="70" r="20" fill="#F59E0B" opacity="0.9"/>
+                  <text x="230" y="74" fill="#070a12" font-size="10" font-weight="extrabold" text-anchor="middle">PLATO</text>
+                  <text x="230" y="102" fill="#F59E0B" font-size="11" font-weight="bold" text-anchor="middle">Dunia Ide</text>
+                </g>
+
+                <!-- Node 3: Arketipe (Psikologi) -->
+                <g onclick="selectMapNode('archetype')" class="cursor-pointer group">
+                  <circle cx="380" cy="90" r="18" fill="#A855F7" opacity="0.85" class="node-pulse"/>
+                  <text x="380" y="94" fill="#070a12" font-size="10" font-weight="extrabold" text-anchor="middle">JUNG</text>
+                  <text x="380" y="122" fill="#A855F7" font-size="11" font-weight="bold" text-anchor="middle">Arketipe</text>
+                </g>
+
+                <!-- Node 4: Shadow (Psikologi) -->
+                <g onclick="selectMapNode('shadow')" class="cursor-pointer group">
+                  <circle cx="130" cy="240" r="18" fill="#A855F7" opacity="0.85"/>
+                  <text x="130" y="244" fill="#070a12" font-size="10" font-weight="extrabold" text-anchor="middle">PSI</text>
+                  <text x="130" y="272" fill="#A855F7" font-size="11" font-weight="bold" text-anchor="middle">Shadow Work</text>
+                </g>
+
+                <!-- Node 5: Observer Effect (Kuantum) -->
+                <g onclick="selectMapNode('observer')" class="cursor-pointer group">
+                  <circle cx="310" cy="250" r="20" fill="#06B6D4" opacity="0.9" class="node-pulse"/>
+                  <text x="310" y="254" fill="#070a12" font-size="10" font-weight="extrabold" text-anchor="middle">QUA</text>
+                  <text x="310" y="282" fill="#06B6D4" font-size="11" font-weight="bold" text-anchor="middle">Observer Effect</text>
+                </g>
+
+                <!-- Central Core Node: Unus Mundus -->
+                <g onclick="selectMapNode('unusmundus')" class="cursor-pointer group">
+                  <circle cx="230" cy="180" r="24" fill="#10B981" opacity="0.95"/>
+                  <text x="230" y="184" fill="#070a12" font-size="9" font-weight="black" text-anchor="middle">SINTERGI</text>
+                  <text x="230" y="215" fill="#10B981" font-size="11" font-weight="extrabold" text-anchor="middle">Unus Mundus</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Detail Explanation Right -->
+            <div class="lg:col-span-5">
+              <div id="map-detail-card" class="glass-panel p-6 rounded-2xl border-l-4 border-emerald-400 bg-slate-900/80 space-y-3">
+                <!-- JS Rendered -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 4: KUIS DIAGNOSTIK ================= -->
+    <section id="sec-kuis" class="tab-content">
+      <div class="max-w-3xl mx-auto">
+        
+        <div class="text-center mb-8">
+          <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/10 text-purple-300 border border-purple-500/20 mb-3 inline-block">
+            <i class="fa-solid fa-sliders mr-1.5"></i> Survey Diagnostik Lensa Kognitif
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Uji Penjajakan Cara Pandang Realitas</h2>
+          <p class="text-xs sm:text-sm text-slate-300 mt-2">Jawablah 9 skenario reflektif ini untuk mengukur porsi pemikiran Filosofis, Psikologis, dan Kuantum dalam diri Anda.</p>
+        </div>
+
+        <div class="glass-panel rounded-2xl p-4 mb-6">
+          <div class="flex justify-between items-center text-xs font-bold text-slate-400 mb-2">
+            <span id="quiz-progress-text">Soal 1 dari 9</span>
+            <span id="quiz-percent-text" class="text-cyan-400">11% Selesai</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2.5 p-0.5 border border-white/10 overflow-hidden">
+            <div id="quiz-progress-bar" class="bg-gradient-to-r from-amber-500 via-purple-500 to-cyan-500 h-full rounded-full transition-all duration-300" style="width: 11.1%;"></div>
+          </div>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 mb-6 border-t border-white/10">
+          <div id="quiz-card-content">
+            <!-- JS Rendered -->
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center">
+          <button id="quiz-prev-btn" onclick="prevQuizQuestion()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-400 bg-slate-800/80 hover:text-white border border-white/10 disabled:opacity-40 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Sebelumnya
+          </button>
+          <button id="quiz-next-btn" onclick="nextQuizQuestion()" disabled class="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-500/25 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+            Lanjut <i class="fa-solid fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 5: LENSA KOGNITIF & REKOMENDASI SYSTEM ================= -->
+    <section id="sec-hasil" class="tab-content">
+      <div class="max-w-5xl mx-auto space-y-8">
+        
+        <!-- Main Result Header Card (Target PNG Export) -->
+        <div id="cognition-result-card" class="glass-panel rounded-3xl p-6 sm:p-10 relative text-center border-t border-white/15 overflow-hidden bg-slate-900/95">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest mb-4 bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            <i class="fa-solid fa-award"></i> Profil Lensa Kognitif & Arketipe Dominan
+          </div>
+          <h2 id="archetype-title" class="text-2xl sm:text-4xl font-extrabold text-white mb-3 font-serif">
+            Sintergi Trias Pengetahuan
+          </h2>
+          <p id="archetype-desc" class="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed mb-6">
+            Selesaikan kuis diagnostik 9 skenario untuk menampilkan pembacaan akurat porsi lensa berpikir Anda.
+          </p>
+
+          <div class="flex flex-wrap justify-center gap-3">
+            <button onclick="switchTab('kuis')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-amber-500 via-purple-500 to-cyan-500 text-slate-950 hover:opacity-90 shadow-lg shadow-purple-500/20">
+              <i class="fa-solid fa-rotate-right mr-2"></i> Mulai / Reset Kuis
+            </button>
+            <button onclick="exportResultCardPNG()" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/40 shadow-lg">
+              <i class="fa-solid fa-file-arrow-down mr-2 text-cyan-400"></i> Unduh Kartu Hasil (PNG)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div class="md:col-span-6 flex justify-center">
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 w-full max-w-sm flex flex-col items-center">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Grafik Radar Dominasi Pengetahuan</span>
+              <svg id="radarSvg" width="260" height="260" viewBox="0 0 260 260" class="overflow-visible">
+                <!-- Rendered dynamically by JS -->
+              </svg>
+            </div>
+          </div>
+
+          <div class="md:col-span-6 space-y-4">
+            <div class="glass-panel rounded-2xl p-5 border-l-4 border-amber-500">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-scroll mr-1.5"></i> Filosofi Sokratik</span>
+                <span id="score-filosofi-val" class="text-sm font-black text-white">0%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2">
+                <div id="bar-filosofi-val" class="bg-amber-500 h-full rounded-full transition-all duration-1000" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 border-l-4 border-purple-500">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold text-purple-400"><i class="fa-solid fa-masks-theater mr-1.5"></i> Psikologi Jungian</span>
+                <span id="score-psikologi-val" class="text-sm font-black text-white">0%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2">
+                <div id="bar-psikologi-val" class="bg-purple-500 h-full rounded-full transition-all duration-1000" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-5 border-l-4 border-cyan-500">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-atom mr-1.5"></i> Fisika Kuantum</span>
+                <span id="score-kuantum-val" class="text-sm font-black text-white">0%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2">
+                <div id="bar-kuantum-val" class="bg-cyan-500 h-full rounded-full transition-all duration-1000" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REKOMENDASI KURIKULUM BACAAN PERSONAL -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-8">
+          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-book-journal-whills text-amber-400"></i> Rekomendasi Kurikulum Bacaan Khusus (Personalized Curriculum)
+          </h3>
+          <p class="text-xs text-slate-400 mb-6">Disusun secara dinamis berdasarkan pilar pengetahuan yang membutuhkan penguatan dasar serta pendalaman tingkat lanjut.</p>
+          
+          <div id="curriculum-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- PANDUAN LATIHAN HARIAN & ACTION PLAN 4 MINGGU -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-6 space-y-4">
+            <div class="glass-panel rounded-3xl p-6 border-t border-purple-500/30">
+              <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-check text-purple-400"></i> Panduan Latihan Praktis Harian (Daily Practice)
+              </h3>
+              <div id="daily-exercises-container" class="space-y-3">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 space-y-4">
+            <div class="glass-panel rounded-3xl p-6 border-t border-cyan-500/30">
+              <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-route text-cyan-400"></i> Action Plan 4 Mingguan Penyatuan Trias
+              </h3>
+              <div id="action-plan-container" class="space-y-3">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 6: JURNAL REFLEKSI DIGITAL ================= -->
+    <section id="sec-jurnal" class="tab-content">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-5">
+          <div class="glass-panel rounded-3xl p-6 sm:p-8 sticky top-28 border-t border-white/10">
+            <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-feather-pointed text-amber-400"></i> Tulis Jurnal Refleksi
+            </h2>
+            <p class="text-xs text-slate-400 mb-6">Dokumentasikan wawasan batin, dialektika pemikiran, atau analisa mimpi Anda secara pribadi di penyimpanan lokal browser.</p>
+
+            <form id="journal-form" onsubmit="handleJournalSave(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Tag Domain</label>
+                <select id="journal-tag" class="w-full glass-input rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none">
+                  <option value="Filosofi Sokratik">Filosofi Sokratik (Elenchus / Aporia)</option>
+                  <option value="Psikologi Jungian">Psikologi Jungian (Shadow / Arketipe)</option>
+                  <option value="Fisika Kuantum">Fisika Kuantum (Superposisi / Observer)</option>
+                  <option value="Sintesis Trias">Sintesis Pengetahuan General</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Judul Refleksi</label>
+                <input type="text" id="journal-title" placeholder="Contoh: Menguraikan Aporia Keyakinan Diri" required class="w-full glass-input rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Isi Catatan Reflektif</label>
+                <textarea id="journal-content" rows="6" placeholder="Tuliskan ide, pertanyaan kritis, atau sintesis baru yang Anda temukan..." required class="w-full glass-input rounded-xl p-4 text-xs text-slate-200 placeholder-slate-500 focus:outline-none resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan Refleksi
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-book-bookmark text-cyan-400"></i> Arsip Jurnal Digital
+              </h3>
+              <span id="journal-count-badge" class="text-xs text-slate-400">0 Catatan Tersimpan</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input type="text" id="journal-search" oninput="renderJournalEntries()" placeholder="Cari catatan..." class="glass-input rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none w-36 sm:w-48">
+              <button onclick="exportJournalTxt()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/10" title="Ekspor ke TXT">
+                <i class="fa-solid fa-download"></i> TXT
+              </button>
+            </div>
+          </div>
+
+          <div id="journal-entries-list" class="space-y-4">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL GLOSARIUM / KAMUS ISTILAH -->
+  <div id="glossary-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-3xl rounded-3xl p-6 max-h-[85vh] flex flex-col border border-white/10 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-white/10">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-amber-400"></i> Kamus Istilah & Glosarium akademis
+        </h3>
+        <button onclick="closeGlossaryModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Search & Category Filters -->
+      <div class="py-4 space-y-3">
+        <input type="text" id="glossary-search" oninput="renderGlossaryList()" placeholder="Cari istilah (misal: Aporia, Shadow, Superposisi)..." class="w-full glass-input rounded-xl px-4 py-2 text-xs text-slate-200 focus:outline-none">
+        <div class="flex gap-2">
+          <button onclick="filterGlossary('all')" id="gfilter-all" class="gfilter-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white border border-white/10">Semua</button>
+          <button onclick="filterGlossary('filosofi')" id="gfilter-filosofi" class="gfilter-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-900/60 text-slate-300 hover:text-amber-300 border border-amber-500/20">Filosofi</button>
+          <button onclick="filterGlossary('psikologi')" id="gfilter-psikologi" class="gfilter-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-900/60 text-slate-300 hover:text-purple-300 border border-purple-500/20">Psikologi</button>
+          <button onclick="filterGlossary('kuantum')" id="gfilter-kuantum" class="gfilter-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-900/60 text-slate-300 hover:text-cyan-300 border border-cyan-500/20">Kuantum</button>
+        </div>
+      </div>
+
+      <!-- Glossary List Container -->
+      <div id="glossary-list-container" class="overflow-y-auto space-y-3 pr-2 flex-1">
+        <!-- JS Rendered -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL LENCANA PENCAPAIAN (BADGES) -->
+  <div id="badges-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-2xl rounded-3xl p-6 border border-white/10 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-award text-purple-400"></i> Galeri Lencana Pencapaian
+          </h3>
+          <p class="text-xs text-slate-400">Lencana terbuka secara otomatis berdasarkan aktivitas eksplorasi Anda.</p>
+        </div>
+        <button onclick="closeBadgesModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div id="badges-grid-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <!-- JS Rendered Badges -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CADANGAN & PEMULIHAN DATA (BACKUP & RESTORE) -->
+  <div id="backup-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-md rounded-3xl p-6 border border-white/10 shadow-2xl relative space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-database text-emerald-400"></i> Cadangan & Pemulihan Data
+        </h3>
+        <button onclick="closeBackupModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Amankan seluruh data belajar, catatan jurnal, progres modul, dan lencana Anda dalam berkas JSON mandiri.
+      </p>
+
+      <!-- Backup Export Button -->
+      <div class="p-4 rounded-2xl bg-slate-950/60 border border-white/5 space-y-2">
+        <strong class="text-xs font-bold text-white block">1. Ekspor Cadangan Data</strong>
+        <p class="text-[11px] text-slate-400">Unduh berkas cadangan <code class="text-emerald-400">symphonia_backup.json</code> untuk disimpan di perangkat Anda.</p>
+        <button onclick="exportBackupJSON()" class="w-full py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-download"></i> Ekspor Berkas JSON
+        </button>
+      </div>
+
+      <!-- Restore Import Input -->
+      <div class="p-4 rounded-2xl bg-slate-950/60 border border-white/5 space-y-2">
+        <strong class="text-xs font-bold text-white block">2. Pulihkan Dari Cadangan</strong>
+        <p class="text-[11px] text-slate-400">Unggah berkas JSON cadangan lama Anda untuk memulihkan seluruh riwayat belajar.</p>
+        <input type="file" id="import-file-input" accept=".json" onchange="importBackupJSON(event)" class="hidden">
+        <button onclick="document.getElementById('import-file-input').click()" class="w-full py-2 rounded-xl text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 hover:bg-purple-500/30 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-upload"></i> Unggah & Pulihkan Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    // =========================================================================
+    // 1. DATA KUTIPAN REFLEKTIF HARIAN
+    // =========================================================================
+    const quoteData = [
+      { quote: "Kehidupan yang tidak diperiksa dan tidak diuji adalah kehidupan yang tidak layak untuk dijalani.", figure: "Socrates", source: "Dialog Plato: Apology 38a" },
+      { quote: "Hingga Anda membuat alam bawah sadar menjadi sadar, ia akan mengarahkan hidup Anda dan Anda akan menyebutnya sebagai takdir.", figure: "Carl Gustav Jung", source: "Aion: Researches into the Phenomenology of the Self" },
+      { quote: "Apa yang kita amati bukanlah alam semesta itu sendiri, melainkan alam semesta yang terpapar pada metode pertanyaan kita.", figure: "Werner Heisenberg", source: "Physics and Philosophy (1958)" },
+      { quote: "Manusia yang sadar akan ketidaktahuannya adalah manusia yang satu langkah lebih dekat menuju kebijaksanaan sejati.", figure: "Socrates", source: "Dialog Plato: Meno" },
+      { quote: "Pengalaman fisik dan dunia batiniah psikis terpancar dari satu tatanan holistik tunggal yang tak terbagi (Unus Mundus).", figure: "David Bohm & C.G. Jung", source: "Wholeness and the Implicate Order" },
+      { quote: "Orang yang melihat ke luar akan bermimpi; orang yang melihat ke dalam batin sendiri akan terbangun.", figure: "Carl Gustav Jung", source: "Surat-Surat Koleksi C.G. Jung" },
+      { quote: "Jika fisika kuantum tidak membuat Anda terkejut secara mendalam, maka Anda belum benar-benar memahaminya.", figure: "Niels Bohr", source: "Atomic Physics and Human Knowledge" },
+      { quote: "Mencintai keindahan fisik hanyalah tangga awal bagi jiwa untuk mendaki menuju kontemplasi Keindahan Mutlak.", figure: "Plato", source: "Dialog Plato: Symposium 211c" }
+    ];
+
+    // =========================================================================
+    // 2. DATA GLOSARIUM & KAMUS ISTILAH (20+ TERMS)
+    // =========================================================================
+    const glossaryData = [
+      { term: "Aporia", category: "filosofi", def: "Kebuntuan kognitif atau kondisi kebingungan sewaktu opini pra-reflektif terbukti kontradiktif melalui dialektika.", takeaway: "Gerbang penyucian ilmu pengetahuan palsu." },
+      { term: "Elenchus", category: "filosofi", def: "Metode wawancara pengujian silang Sokratik untuk membongkar kontradiksi internal suatu premis keyakinan.", takeaway: "Teknik penyucian dogma kognitif." },
+      { term: "Maieutika", category: "filosofi", def: "Seni kebidanan jiwa di mana pengajar membantu lawan bicara melahirkan kebenaran dari jiwanya sendiri.", takeaway: "Pengetahuan lahir dari batin mandiri." },
+      { term: "Anamnesis", category: "filosofi", def: "Teori Platonik bahwa belajar adalah proses mengingat kembali kebenaran murni yang pernah dikenal jiwa.", takeaway: "Kebenaran sejati sudah ada di batin." },
+      { term: "Doxa", category: "filosofi", def: "Opini atau kepercayaan dangkal tanpa dasar rasional teruji yang dianut masyarakat secara mentah.", takeaway: "Lawan dari Episteme (ilmu sejati)." },
+      { term: "Arete", category: "filosofi", def: "Kesempurnaan, kebajikan murni, atau pencapaian potensi tertinggi jiwa manusia.", takeaway: "Tujuan utama etika Sokratik." },
+      { term: "Eikasia", category: "filosofi", def: "Tingkat persepsi terendah dalam Alegori Gua Plato, di mana manusia hanya mempercayai bayangan empiris.", takeaway: "Ilusi indrawi tak teruji." },
+      { term: "Persona", category: "psikologi", def: "Topeng adaptif sosial yang dibentuk individu untuk memenuhi norma dan tuntutan masyarakat.", takeaway: "Kostum peran sosial, bukan identitas murni." },
+      { term: "Shadow (Bayangan)", category: "psikologi", def: "Sisi gelap tak sadar memuat insting dan trauma tertekan yang kerap diproyeksikan pada orang lain.", takeaway: "Shadow Work adalah fondasi keutuhan jiwa." },
+      { term: "Anima & Animus", category: "psikologi", def: "Elemen kontrasender batiniah (feminin pada pria, maskulin pada wanita) penghubung ke ketidaksadaran kolektif.", takeaway: "Keseimbangan elemen batin gender." },
+      { term: "Individuasi", category: "psikologi", def: "Proses perkembangan psikologis sepanjang hayat untuk menyatukan alam sadar dan tak sadar menuju Sang Diri (The Self).", takeaway: "Menjadi diri sendiri yang utuh." },
+      { term: "Sinkronisitas", category: "psikologi", def: "Kebetulan bermakna di mana peristiwa batin bertepatan secara akurat dengan peristiwa fisik luar tanpa kausalitas.", takeaway: "Ikatan makna akausal realitas." },
+      { term: "Syzygy", category: "psikologi", def: "Penyatuan pasangan oposisi psikis, seperti Anima dan Animus, dalam integrasi jiwa Jungian.", takeaway: "Keharmonisan oposisi batin." },
+      { term: "Superposisi Kuantum", category: "kuantum", def: "Keadaan di mana sistem subatomik berada dalam semua kemungkinan potensi secara bersamaan sebelum diukur.", takeaway: "Matriks probabilitas tak terbatas." },
+      { term: "Wave Function Collapse", category: "kuantum", def: "Transisi peruntuhan paket gelombang probabilitas (Ψ) menjadi satu materi padat terukur akibat interaksi pengamatan.", takeaway: "Realitas terwujud melalui pengamatan." },
+      { term: "Quantum Entanglement", category: "kuantum", def: "Kondisi keterikatan dua partikel secara instan melampaui batasan jarak galaksi secara non-lokal.", takeaway: "Alam semesta terhubung secara holistik." },
+      { term: "Tatanan Implisit", category: "kuantum", def: "Teori David Bohm bahwa dunia fisik terungkap hanyalah riakan dari tatanan holistik terlipat (Implicate Order).", takeaway: "Materi dan pikiran dari satu matriks." },
+      { term: "Decoherence Kuantum", category: "kuantum", def: "Proses hilangnya perilaku gelombang kuantum saat berinteraksi dengan lingkungan makroskopis.", takeaway: "Batas dunia kuantum dan fisik klasik." },
+      { term: "Unus Mundus", category: "kuantum", def: "Konsep tatanan alam semesta tunggal tempat fisika dan psikis terpancar dari satu fondasi holistik yang sama.", takeaway: "Penyatuan fisik dan batin." },
+      { term: "Holomovement", category: "kuantum", def: "Dinamika pergerakan tak terbagi dari tatanan terlipat alam semesta ciptaan David Bohm.", takeaway: "Aliran realitas terpadu." }
+    ];
+
+    // =========================================================================
+    // 3. DATA LENCANA PENCAPAIAN (BADGES DATA)
+    // =========================================================================
+    const badgesData = [
+      { id: 'b1', title: 'Pembelajar Pemula', icon: 'fa-graduation-cap text-amber-400', desc: 'Membaca dan menyelesaikan modul pertama Anda.' },
+      { id: 'b2', title: 'Socratic Inquirer', icon: 'fa-scroll text-amber-500', desc: 'Menyelesaikan seluruh 7 modul materi Filosofi.' },
+      { id: 'b3', title: 'Jungian Explorer', icon: 'fa-masks-theater text-purple-400', desc: 'Menyelesaikan seluruh 7 modul materi Psikologi.' },
+      { id: 'b4', title: 'Quantum Observer', icon: 'fa-atom text-cyan-400', desc: 'Menyelesaikan seluruh 7 modul materi Fisika Kuantum.' },
+      { id: 'b5', title: 'Master Trias', icon: 'fa-brain text-emerald-400', desc: 'Menyelesaikan 21 modul kompendium secara lengkap.' },
+      { id: 'b6', title: 'Recall Master', icon: 'fa-clone text-purple-300', desc: 'Telah menguasai minimal 10 Flashcards Active Recall.' },
+      { id: 'b7', title: 'Reflektif Sejati', icon: 'fa-feather-pointed text-amber-300', desc: 'Menulis minimal 3 catatan Jurnal Refleksi.' },
+      { id: 'b8', title: 'Penjelajah Lab', icon: 'fa-wand-magic-sparkles text-cyan-300', desc: 'Menyelesaikan 9 skenario Kuis Diagnostik.' }
+    ];
+
+    // =========================================================================
+    // 4. DATA FLASHCARDS ACTIVE RECALL (15 ISTILAH KUNCI)
+    // =========================================================================
+    const flashcardData = [
+      { term: "Aporia", category: "filosofi", prompt: "Apa arti dan peran penting istilah ini dalam Dialektika Sokratik?", titleBack: "Kebuntuan Kognitif Konstruktif", descBack: "Kondisi kebingungan sewaktu asumsi pra-reflektif dibuktikan kontradiktif melalui pertanyaan kritis. Aporia adalah purgasi mental yang membersihkan jiwa dari kesombongan opini palsu (doxa).", takeawayBack: "Pintu gerbang utama menuju kesadaran ketidaktahuan diri." },
+      { term: "Elenchus", category: "filosofi", prompt: "Bagaimana metode pertanyaan ini membongkar dogma pemikiran?", titleBack: "Metode Pengujian Silang Sokratik", descBack: "Teknik wawancara dialektis dengan mengajukan pertanyaan bertubi-tubi pada suatu premis hingga ditemukan kontradiksi internalnya (reductio ad absurdum).", takeawayBack: "Alat pembersih ilusi pengetahuan empiris." },
+      { term: "Alegori Gua Plato", category: "filosofi", prompt: "Apa yang disimbolkan oleh bayangan di dinding gua?", titleBack: "Dunia Bayangan Empiris vs Dunia Ide", descBack: "Perumpamaan manusia terikat yang mengira bayangan di dinding gua adalah realitas mutlak. Tugas filsuf adalah keluar dari gua menuju cahaya matahari (Dunia Forms/Ide).", takeawayBack: "Pengalaman indrawi hanyalah refleksi samar dari kebenaran mutlak." },
+      { term: "Anamnesis", category: "filosofi", prompt: "Mengapa belajar dianggap sebagai proses 'mengingat kembali'?", titleBack: "Teori Pengetahuan sebagai Ingatan Jiwa", descBack: "Pandangan Platonik bahwa jiwa telah mengenal Bentuk Sejati sebelum lahir ke tubuh fisik. Proses belajar adalah mengingat kembali (anamnesis) pengetahuan murni tersebut.", takeawayBack: "Kebenaran sejati sudah tertanam di dalam batin manusia." },
+      { term: "Maieutika", category: "filosofi", prompt: "Mengapa Socrates mengidentifikasi dirinya sebagai seorang 'Bidan'?", titleBack: "Seni Kebidanan Jiwa", descBack: "Socrates tidak menyuapkan ajaran doktrinal, melainkan membantu orang lain melahirkan kebenaran dari dalam jiwanya sendiri lewat pertanyaan pemicu.", takeawayBack: "Guru sejati memfasilitasi penemuan kebenaran mandiri." },
+      { term: "Persona", category: "psikologi", prompt: "Apa fungsi dan bahaya dari penggunaan 'Persona' sosial?", titleBack: "Topeng Adaptif Sosial", descBack: "Kompromi psikologis antara individu dan masyarakat untuk memenuhi norma sosial. Bahaya terjadi jika Ego mengidentifikasi dirinya secara mutlak dengan topeng ini.", takeawayBack: "Persona adalah kostum peran, bukan inti identitas sejati." },
+      { term: "Shadow (Bayangan)", category: "psikologi", prompt: "Bagaimana sifat-sifat dalam Shadow bekerja jika diabaikan oleh Ego?", titleBack: "Sisi Gelap Batin Tertekan", descBack: "Bagian dari ketidaksadaran pribadi yang berisi dorongan insting dan trauma yang ditolak Ego. Jika diabaikan, Shadow diproyeksikan pada orang lain sebagai rasa benci.", takeawayBack: "Mengenali Shadow adalah langkah awal individuasi utuh." },
+      { term: "Anima / Animus", category: "psikologi", prompt: "Apa peran arketipe kontrasender ini dalam hubungan emosional?", titleBack: "Elemen Gender Bawah Sadar", descBack: "Anima adalah elemen feminin tak sadar dalam batin pria; Animus adalah elemen maskulin tak sadar dalam batin wanita. Berfungsi sebagai jembatan ke ketidaksadaran kolektif.", takeawayBack: "Integrasi Anima/Animus mencegah proyeksi cinta idealis tak realistis." },
+      { term: "Individuasi", category: "psikologi", prompt: "Apa tujuan akhir dari perjalanan proses Individuasi Jungian?", titleBack: "Pencapaian Keutuhan Diri (The Self)", descBack: "Perjalanan psikologis sepanjang hayat untuk menyatukan elemen kesadaran dan ketidaksadaran menjadi satu kepribadian yang utuh, unik, dan selaras.", takeawayBack: "Menjadi diri sendiri yang utuh, bukan sempurna menurut norma." },
+      { term: "Sinkronisitas", category: "psikologi", prompt: "Mengapa fenomena kebetulan ini disebut memiliki ikatan Akausal?", titleBack: "Prinsip Hubungan Akausal Bermakna", descBack: "Kebetulan bermakna di mana peristiwa batin (mimpi/firasat) secara presisi bertepatan dengan peristiwa nyata di luar tanpa hubungan sebab-akibat fisik.", takeawayBack: "Dunia batin dan realitas fisik terikat dalam tatanan makna." },
+      { term: "Superposisi Kuantum", category: "kuantum", prompt: "Bagaimana keadaan entitas kuantum sebelum dilakukan pengukuran?", titleBack: "Keadaan Potensi Gelombang Multipel", descBack: "Prinsip di mana partikel subatomik berada dalam semua kemungkinan keadaan dan lokasi secara bersamaan hingga terjadi interaksi pengukuran.", takeawayBack: "Realitas sebelum diukur adalah paket probabilitas tak terbatas." },
+      { term: "Runtuhnya Fungsi Gelombang (Ψ)", category: "kuantum", prompt: "Apa yang memicu runtuhnya paket probabilitas menjadi satu materi padat?", titleBack: "Wave Function Collapse", descBack: "Transisi di mana fungsi gelombang probabilitas (Ψ) meruntuhkan seluruh potensi menjadi satu keadaan empiris padat akibat tindakan pengukuran/interaksi.", takeawayBack: "Interaksi pengamatan merealisasikan potensi menjadi fakta." },
+      { term: "Prinsip Ketidakpastian Heisenberg", category: "kuantum", prompt: "Mengapa kita tidak bisa mengukur posisi dan kecepatan partikel bersamaan?", titleBack: "Batas Epistemologis Pengukuran", descBack: "Aturan matematis (Δx · Δp ≥ ℏ/2) yang membuktikan bahwa semakin presisi posisi partikel diukur, semakin tidak pasti kecepatannya.", takeawayBack: "Tindakan mengamati mengubah kondisi sistem yang diamati." },
+      { term: "Quantum Entanglement", category: "kuantum", prompt: "Mengapa Einstein menyebut fenomena ini 'Spooky action at a distance'?", titleBack: "Keterikatan Kuantum Non-Lokal", descBack: "Kondisi di mana dua partikel terikat secara erat sehingga perubahan pada satu partikel secara seketika memengaruhi pasangannya melampaui batasan jarak.", takeawayBack: "Alam semesta di tingkat subatomik saling terhubung secara holistik." },
+      { term: "Tatanan Implisit (Implicate Order)", category: "kuantum", prompt: "Bagaimana David Bohm menjelaskan hubungan antara materi dan pikiran?", titleBack: "Realitas Terlipat Holistik David Bohm", descBack: "Teori fisika bahwa dunia fisik yang kita lihat hanyalah tatanan terungkap (Explicate Order) dari matriks dasar holistik terlipat (Implicate Order).", takeawayBack: "Materi fisik dan kesadaran berasal dari satu matriks holistik." }
+    ];
+
+    // =========================================================================
+    // 5. DATA MATERI PEMBELAJARAN DEEP-DIVE (21 MODUL OTENTIK)
+    // =========================================================================
+    const materiData = [
+      { id: 'm1', domain: 'filosofi', title: 'Metode Elenchus & Maieutika (Seni Kebidanan Jiwa)', figure: 'Socrates & Plato', sourceText: "Plato's Dialogues ('Theaetetus' & 'Apology')", quote: '"Jiwa manusia mengandung pengetahuan sejati yang hanya memerlukan kebidanan konseptual untuk dilahirkan." — Theaetetus 149a', basicText: 'Metode Elenchus adalah teknik tanya-jawab khas Socrates untuk menguji kebenaran pemikiran seseorang. Socrates menganalogikan dirinya sebagai "bidan jiwa" (Maieutika) yang tidak memberikan ajaran doktrinal, melainkan membantu orang melahirkan kebenaran dari dalam jiwanya sendiri.', advancedText: 'Dialektika Maieutika (maieutike techne) memperlakukan Socrates bukan sebagai pengajar doktrin, melainkan bidan jiwa yang menguji keabsahan gagasan pra-reflektif. Melalui pertanyaan silang bertubi-tubi, konsistensi internal keyakinan penderita mengalami kontradiksi reductio ad absurdum, membersihkan jiwa dari kesombongan opini palsu (doxa).' },
+      { id: 'm2', domain: 'filosofi', title: 'Konsep Aporia & Runtuhnya Ilusi Pengetahuan', figure: 'Socrates', sourceText: "Plato's 'Meno' & 'Theaetetus'", quote: '"Kebijaksanaan sejati dimulai saat kita menyadari bahwa kita tidak tahu apa-apa." — Apology 21d', basicText: 'Aporia adalah kondisi di mana seseorang mengalami rasa bingung dan buntu secara pikiran setelah asumsi dasarnya dibuktikan salah. Kebingungan ini bukanlah kegagalan, melainkan tahap awal yang penting agar pikiran siap menerima kebenaran yang baru.', advancedText: 'Aporia adalah fase purgasi kognitif dalam kebidanan jiwa. Dalam dialog Meno, kebingungan ini diibaratkan seperti sengatan ikan pari listrik yang melumpuhkan prasangka pra-reflektif, meruntuhkan ilusi kebenaran subjektif agar jiwa siap melakukan anamnesis (peningatan kembali realitas bentuk sejati).' },
+      { id: 'm3', domain: 'filosofi', title: 'Alegori Gua Plato & Dunia Ide (Forms)', figure: 'Plato', sourceText: "Plato's 'Republic' Book VII (514a–520a)", quote: '"Manusia terbelenggu mengira bayangan di dinding gua adalah kebenaran mutlak."', basicText: 'Plato menggambarkan manusia seperti tahanan yang terikat di dalam gua yang gelap sejak kecil. Mereka hanya bisa melihat bayangan benda yang diproyeksikan oleh api di belakang mereka. Tugas seorang filsuf adalah keluar dari gua menuju cahaya matahari untuk melihat dunia yang nyata.', advancedText: 'Alegori Gua memetakan empat tingkatan epistemologis Plato (Garis Terbagi): Eikasia (persepsei bayangan), Pistis (keyakinan empiris benda nyata di gua), Dianoia (pemikiran rasional-matematis di luar gua), dan Noesis (intuisasi langsung terhadap Bentuk Utama / Idea of Good yang disimbolkan oleh Matahari).' },
+      { id: 'm4', domain: 'filosofi', title: 'Mitos Kereta Kuda Phaedrus (Tripartite Soul)', figure: 'Plato', sourceText: "Plato's Dialogue 'Phaedrus' (246a–254e)", quote: '"Jiwa adalah penunggang kereta yang mengendalikan dua ekor kuda dengan sifat berlawanan."', basicText: 'Jiwa manusia diibaratkan sebagai penunggang kereta kuda. Penunggang menggambarkan Akal Sehat, kuda putih melambangkan Semangat Keberanian yang patuh, dan kuda hitam melambangkan Nafsu Liar yang sulit dikendalikan.', advancedText: 'Phaedrus menyajikan tripartit arsitektur jiwa platonik (Logistikon, Thymoeides, dan Epithymetikon). Penunggang Kereta (Logistikon) harus menyeimbangkan daya dorong cita-cita mulia Kuda Putih dan dorongan insting material Kuda Hitam. Kegagalan mengendalikan kuda hitam menyebabkan jiwa jatuh dari tatanan surgawi murni.' },
+      { id: 'm5', domain: 'filosofi', title: 'Etika Sokratik & Intellectual Virtues', figure: 'Socrates & Plato', sourceText: "Plato's 'Protagoras' & 'Gorgias'", quote: '"Kejahatan lahir dari ketidaktahuan (Ignorance), bukan dari kesengajaan murni." — Protagoras 358c', basicText: 'Socrates meyakini bahwa kebajikan (Virtue) adalah bentuk pengetahuan. Tidak ada orang yang sengaja melakukan tindakan jahat jika ia benar-benar memahami apa yang terbaik bagi jiwanya.', advancedText: 'Intelektualisme etis Sokratik menegaskan identitas ontologis antara Arete (kebajikan) dan Episteme (pengetahuan). Seseorang yang melakukan kejahatan mengalami Amathia (ketidaktahuan kognitif bahwa perbuatannya merusak jiwa sendiri). Oleh karena itu, perbaikan moral dicapai melalui penyucian intelektual.' },
+      { id: 'm6', domain: 'filosofi', title: 'Dialektika Crito & Hakikat Kewajiban Moral', figure: 'Socrates & Crito', sourceText: "Plato's Dialogue 'Crito' (47a–54e)", quote: '"Bukan sekadar hidup yang bernilai, melainkan hidup yang dijalani secara berkeadilan." — Crito 48b', basicText: 'Dalam dialog Crito, Socrates menolak tawaran sahabatnya untuk melarikan diri dari hukuman mati. Ia memilih menerima keputusan pengadilan hukum Athena demi mempertahankan konsistensi moral dan rasa hormat pada aturan masyarakat.', advancedText: 'Crito menguraikan fondasi awal teori Kontrak Sosial (Social Contract). Socrates berargumen bahwa dengan menikmati perlindungan dan kehidupan di Athena sepanjang usianya, ia telah menyepakati perjanjian implisit dengan hukum polis (Nomoi). Melanggar hukum demi menyelamatkan nyawa fisik akan merusak integritas jiwa.' },
+      { id: 'm7', domain: 'filosofi', title: 'Simposium Plato & Tangga Cinta Logos (Eros)', figure: 'Plato & Diotima', sourceText: "Plato's 'Symposium' (201d–212c)", quote: '"Eros adalah dorongan jiwa dari keindahan fisik menuju kontemplasi Keindahan Mutlak."', basicText: 'Melalui ajaran Diotima dari Mantinea, Plato menjelaskan bahwa Eros (Cinta) adalah proses pendakian jiwa: dari mencintai keindahan bentuk fisik individual, meningkat menuju keindahan jiwa, keindahan hukum, dan akhirnya kontemplasi Keindahan Mutlak sejati.', advancedText: 'Scala Amoris (Tangga Cinta Diotima) menggambarkan proses anagogik jiwa dalam menembus tingkatan kenyataan. Eros tidak sekadar dorongan biologis, melainkan daya tarik metafisik menuju Kebenaran Abadi (Autokalon). Kebijaksanaan filsafat adalah titik puncak perjalanan anagogik Eros.' },
+
+      // PSIKOLOGI (7 Modul)
+      { id: 'm8', domain: 'psikologi', title: 'Topografi Psikhe: Ego, Kesadaran, & Ketidaksadaran', figure: 'Carl Gustav Jung', sourceText: "C.G. Jung — 'The Structure and Dynamics of the Psyche'", quote: '"Jiwa manusia terdiri dari lapisan sadar, tidak sadar pribadi, dan samudra ketidaksadaran kolektif."', basicText: 'Jung membagi pikiran manusia menjadi tiga lapisan: Ego (kesadaran diri kita sehari-hari), Ketidaksadaran Pribadi (memori dan trauma yang kita lupakan), serta Ketidaksadaran Kolektif (memori leluhur universal manusia).', advancedText: 'Ego beroperasi sebagai pusat bidang kesadaran. Di bawahnya terdapat Ketidaksadaran Pribadi yang berisi kompleks tertekan. Lapisan terdalam adalah Ketidaksadaran Kolektif yang bersifat apriori dan impersonal, berisi struktur potensi psikis universal yang diturunkan secara filogenetis.' },
+      { id: 'm9', domain: 'psikologi', title: 'Arketipe & Ketidaksadaran Kolektif (Memori Purba)', figure: 'Carl Gustav Jung', sourceText: "C.G. Jung — 'The Archetypes and the Collective Unconscious'", quote: '"Ketidaksadaran kolektif berisi seluruh warisan spiritual dari evolusi kemanusiaan."', basicText: 'Arketipe adalah pola atau motif bawaan universal yang ada di dalam alam bawah sadar seluruh manusia. Arketipe muncul dalam bentuk simbol mitologi, cerita rakyat, dan pola mimpi lintas budaya.', advancedText: 'Arketipe bersifat struktural dan apriori (Form without Content), seperti kristal yang membentuk alur pengkristalan larutan. Arketipe hanya termanifestasi secara spesifik sewaktu terisi oleh pengalaman budaya individual, mengarahkan persepsi emosional dan intuisi manusia secara tidak sadar.' },
+      { id: 'm10', domain: 'psikologi', title: 'Dinamika Persona & Shadow (Sisi Gelap Batin)', figure: 'Carl Gustav Jung', sourceText: "C.G. Jung — 'Aion: Researches into the Phenomenology of the Self'", quote: '"Hingga kau membuat Shadow menjadi sadar, ia akan mengarahkan hidupmu dan kau sebut itu takdir."', basicText: 'Persona adalah topeng sosial yang kita pakai saat berinteraksi masyarakat, sedangkan Shadow adalah sisi gelap tersembunyi yang berisi dorongan insting dan trauma yang sering ditolak oleh Ego.', advancedText: 'Persona adalah kompromi adaptif psikis sosial. Shadow memuat sifat-sifat primitif yang diproyeksikan ke luar diri (projection) jika diabaikan. Integrasi Shadow (Shadow Work) adalah langkah imperatif pertama agar ego tidak terpecah dan dikuasai oleh proyeksi emosional tak sadar.' },
+      { id: 'm11', domain: 'psikologi', title: 'Anima, Animus, & Pencapaian Syzygy', figure: 'Carl Gustav Jung', sourceText: "C.G. Jung — 'Psychology and Alchemy'", quote: '"Pertemuan antara Ego dan Anima/Animus adalah langkah krusial menuju keutuhan batin."', basicText: 'Anima adalah elemen kepribadian feminin bawah sadar dalam batin pria, sedangkan Animus adalah elemen maskulin bawah sadar dalam batin wanita. Mengenali elemen ini membawa keseimbangan emosional.', advancedText: 'Anima dan Animus berfungsi sebagai jembatan psikis antara Ego dan Ketidaksadaran Kolektif. Integrasi kontrasender psikis ini (Syzygy) membebaskan individu dari proyeksi romantis idealis yang tidak realistis dan membuka pintu menuju kesadaran transendental.' },
+      { id: 'm12', domain: 'psikologi', title: 'Proses Individuasi & Arketipe Sang Diri (The Self)', figure: 'Carl Gustav Jung', sourceText: "C.G. Jung — 'Two Essays on Analytical Psychology'", quote: '"Individuasi adalah menjadi diri sendiri secara utuh, unik, dan terintegrasi."', basicText: 'Individuasi adalah perjalanan hidup untuk mengenali dan menyatukan seluruh bagian jiwa kita—baik yang kita sukai maupun sisi gelap yang kita takuti—menjadi satu pribadi yang utuh.', advancedText: 'Proses Individuasi adalah pergerakan dialektis sepanjang hayat menuju integrasi psikis. Proses ini menuntut pelepasan identifikasi ego dari Persona, perjumpaan berani dengan Shadow, konfrontasi dengan Anima/Animus, dan akhirnya tunduknya ego pada bimbingan The Self yang disimbolkan oleh pola Mandala.' },
+      { id: 'm13', domain: 'psikologi', title: 'Sinkronisitas: Prinsip Hubungan A-Kausal Bermakna', figure: 'C.G. Jung & Wolfgang Pauli', sourceText: "C.G. Jung — 'Synchronicity: An Acausal Connecting Principle'", quote: '"Kebetulan bermakna yang menghubungkan dunia batiniah dan kejadian fisik."', basicText: 'Sinkronisitas adalah fenomena kebetulan yang memiliki arti mendalam, di mana peristiwa batin kita (seperti mimpi) secara mengejutkan cocok dengan kejadian nyata di luar tanpa sebab fisik.', advancedText: 'Sinkronisitas merumuskan hubungan akausal antar peristiwa berbasis kesamaan makna (meaningful coincidence). Kolaborasi Jung dan fisikawan kuantum Wolfgang Pauli membuktikan bahwa realitas fisik dan psikis berasal dari fondasi tunggal yang sama (Unus Mundus).' },
+      { id: 'm14', domain: 'psikologi', title: 'Analisis Simbol, Mitos, & Tafsir Bawah Sadar', figure: 'Carl Gustav Jung & Joseph Campbell', sourceText: "C.G. Jung — 'Man and His Symbols'", quote: '"Simbol adalah bahasa spontan ketidaksadaran yang tidak bisa digantikan oleh kata rasional."', basicText: 'Ketidaksadaran berkomunikasi melalui bahasa simbolik dalam mimpi dan mitos peradaban. Memahami simbol membantu seseorang memecahkan konflik batin yang sulit dijangkau oleh logika rasional.', advancedText: 'Simbol psikologis berbeda dari sekadar tanda (sign); simbol mewakili realitas arketipal yang belum sepenuhnya terartikulasi oleh kesadaran verbal. Tafsir mimpi Jungian menggunakan metode amplifikasi untuk menghubungkan motif mimpi individu dengan narasi mitologis kolektif manusia.' },
+
+      // KUANTUM (7 Modul)
+      { id: 'm15', domain: 'kuantum', title: 'Celah Ganda & Dualitas Gelombang-Partikel', figure: 'Thomas Young, Louis de Broglie & Niels Bohr', sourceText: "'Atomic Physics and Human Knowledge' & Eksperimen Double-Slit", quote: '"Materi di tingkat subatomik bertindak sebagai gelombang sekaligus partikel padat."', basicText: 'Dalam eksperimen celah ganda, foton cahaya yang ditembakkan melintasi dua celah bertindak sebagai gelombang probabilitas. Namun ketika diamati, ia berubah menjadi partikel padat tunggal.', advancedText: 'Dualitas Gelombang-Partikel menunjukkan bahwa entitas kuantum tidak memiliki atribut objektif yang terdefinisi secara independen dari alat ukur. Persamaan De Broglie membuktikan bahwa setiap materi memiliki panjang gelombang probabilitas sebelum interaksi pengukuran dilakukan.' },
+      { id: 'm16', domain: 'kuantum', title: 'Fungsi Gelombang (Ψ) & Wave Function Collapse', figure: 'Erwin Schrödinger & Werner Heisenberg', sourceText: "Schrödinger's Wave Mechanics & 'Physics and Philosophy'", quote: '"Fungsi gelombang meruntuhkan jutaan kemungkinan menjadi satu fakta empiris padat."', basicText: 'Fungsi gelombang (Ψ) adalah rumus matematis yang berisi semua potensi tempat partikel berada. Ketika sebuah pengukuran atau interaksi terjadi, fungsi gelombang ini "runtuh" menjadi satu posisi nyata.', advancedText: 'Persamaan Gelombang Schrödinger menggambarkan evolusi deterministik dari keadaan kuantum dalam ruang Hilbert. Tindakan pengukuran menyebabkan Collapse of Wave Function (reduksi paket gelombang), mengubah superposisi linear probabilitas menjadi keadaan eigen tunggal terukur.' },
+      { id: 'm17', domain: 'kuantum', title: 'Prinsip Ketidakpastian Heisenberg', figure: 'Werner Heisenberg', sourceText: "Heisenberg's 1927 Uncertainty Relation Paper", quote: '"Apa yang kita amati bukanlah alam semesta itu sendiri, melainkan alam semesta yang terpapar metode pengukuran kita."', basicText: 'Prinsip Ketidakpastian menyatakan bahwa kita tidak bisa mengukur posisi dan kecepatan sebuah partikel secara bersamaan dengan presisi sempurna. Semakin akurat posisi diukur, semakin tidak pasti kecepatannya.', advancedText: 'Prinsip Ketidakpastian Heisenberg membuktikan bahwa indeterminisme bukanlah keterbatasan alat laboratorium, melainkan sifat dasar ontologis dari alam semesta kuantum. Pengukuran mengganggu sistem yang diamati secara mendasar.' },
+      { id: 'm18', domain: 'kuantum', title: 'Interpretasi Kopenhagen & Efek Pengamat', figure: 'Niels Bohr & Werner Heisenberg', sourceText: "Copenhagen Interpretation of Quantum Mechanics", quote: '"Pengamat tidak berdiri di luar sistem; ia adalah partisipan aktif dalam mewujudkan realitas."', basicText: 'Interpretasi Kopenhagen menyatakan bahwa entitas kuantum tidak memiliki kenyataan fisik padat sebelum diukur. Pengamat berperan penting dalam memicu munculnya realitas empiris.', advancedText: 'Epistemologi Kopenhagen menolak realisme ingenu (naive realism). Fisika kuantum menurut Bohr tidak lagi mendeskripsikan "alam semesta sebagaimana adanya", melainkan mendeskripsikan pengetahuan manusia tentang hubungan interaktif antara pengamat dan fenomena teramati.' },
+      { id: 'm19', domain: 'kuantum', title: 'Quantum Entanglement & Kausalitas Non-Lokal', figure: 'A. Einstein, B. Podolsky, N. Rosen & John Bell', sourceText: "EPR Paradox (1935) & Bell's Theorem (1964)", quote: '"Dua partikel yang terikat saling memengaruhi secara instan melampaui batasan jarak galaksi."', basicText: 'Keterikatan kuantum adalah kondisi di mana dua partikel terhubung secara ajaib. Perubahan pada satu partikel akan langsung mengubah partikel pasangannya seketika, biarpun terpisah jarak sangat jauh.', advancedText: 'Quantum Entanglement membuktikan sifat non-lokalitas alam semesta (terbukti lewat Teorema Bell). Hal ini menggugurkan asumsi Local Realism fisika klasik, membuktikan bahwa informasi di tingkat subatomik saling terhubung tanpa dibatasi oleh kecepatan cahaya.' },
+      { id: 'm20', domain: 'kuantum', title: 'David Bohm & Teori Tatanan Implisit (Implicate Order)', figure: 'David Bohm', sourceText: "Bohm's 'Wholeness and the Implicate Order' (1980)", quote: '"Apakah realitas diciptakan oleh tindakan pengamatan, atau terlipat dalam tatanan holistik?"', basicText: 'David Bohm menyatakan bahwa ada "Tatanan Terlipat" (Implicate Order) di mana seluruh materi dan kesadaran terhubung secara holistik dalam satu tatanan tunggal semesta.', advancedText: 'Bohm mengajukan Holomovement dan Implicate Order, di mana manifestasi materi fisik (Explicate Order) hanyalah riakan terungkap dari tatanan holistik yang tak terbagi (Undivided Wholeness). Pikiran dan materi memancar dari fondasi holistik yang sama.' },
+      { id: 'm21', domain: 'kuantum', title: 'Paradoks Kucing Schrödinger & Problem Pengukuran', figure: 'Erwin Schrödinger & Eugene Wigner', sourceText: "Schrödinger's 1935 Gedankenexperiment", quote: '"Kucing dalam kotak berada dalam superposisi hidup dan mati sekaligus hingga kotak dibuka."', basicText: 'Eksperimen pikiran Kucing Schrödinger menunjukkan keanehan kuantum: sebelum kotak dibuka (diukur), kucing berada dalam keadaan superposisi hidup dan mati secara bersamaan.', advancedText: 'Problem Pengukuran Kuantum (Quantum Measurement Problem) mempertanyakan di mana batas pasti decoherence kuantum terjadi saat bertransisi dari tingkat mikroskopis ke makroskopis, serta peran kesadaran (conscious observer) dalam meruntuhkan fungsi gelombang.' }
+    ];
+
+    // =========================================================================
+    // 6. DATA KUIS DIAGNOSTIK (9 SKENARIO REFLEKTIF)
+    // =========================================================================
+    const quizQuestions = [
+      { id: 1, scenario: "Saat menghadapi ketidakpastian besar atau krisis eksistensial dalam hidup, apa tindakan intuitif pertama Anda?", options: [ { text: "Menguji kembali kebenaran asumsi dasar dan keyakinan saya melalui logika dan perenungan kritis.", type: "filosofi", ref: "Socrates — Apology & Elenchus" }, { text: "Menyelami alam bawah sadar, memperhatikan mimpi, dan memahami makna simbolis emosi batin.", type: "psikologi", ref: "C.G. Jung — Man and His Symbols" }, { text: "Menyadari bahwa situasi berada dalam superposisi potensi dan tindakan pengamatan saya yang menentukan hasilnya.", type: "kuantum", ref: "Interpretasi Kopenhagen & Bohr" } ] },
+      { id: 2, scenario: "Bagaimana Anda memandang hakikat 'Kebenaran' atau Realitas sejati?", options: [ { text: "Kebenaran diperoleh melalui proses eliminasi opini palsu (doxa) menuju Idea/Bentuk sejati secara rasional.", type: "filosofi", ref: "Plato — Alegori Gua" }, { text: "Kebenaran adalah integrasi subjektif-objektif antara ego sadar dan ketidaksadaran kolektif.", type: "psikologi", ref: "C.G. Jung — Individuasi & Archetypes" }, { text: "Kebenaran fisik tidak bersifat mutlak objektif; ia bergantung pada interaksi antara Pengamat dan sistem terukur.", type: "kuantum", ref: "Werner Heisenberg — Physics & Philosophy" } ] },
+      { id: 3, scenario: "Ketika Anda membuat kesalahan besar atau mengalami kegagalan, bagaimana Anda memprosesnya?", options: [ { text: "Saya menyambut kondisi 'Aporia' (kebingungan) ini sebagai pembersihan jiwa untuk melahirkan kebenaran baru.", type: "filosofi", ref: "Socrates — Dialektika Maieutika" }, { text: "Saya memeriksa apakah kegagalan tersebut adalah wujud proyeksi 'Shadow' atau dorongan tak sadar yang belum terintegrasi.", type: "psikologi", ref: "C.G. Jung — Proyeksi & Shadow" }, { text: "Saya melihatnya sebagai pemicu keruntuhan fungsi gelombang dari sekian banyak kemungkinan keputusan.", type: "kuantum", ref: "Wave Function Collapse" } ] },
+      { id: 4, scenario: "Bagaimana pandangan Anda tentang takdir, kebetulan, dan sebab-akibat dalam kehidupan?", options: [ { text: "Segala peristiwa harus diuji konsistensi kausalitas moral dan kewajiban rasionalnya.", type: "filosofi", ref: "Socrates — Dialog Crito" }, { text: "Kebetulan tidaklah acak; ada peristiwa 'Sinkronisitas' akausal yang dihubungkan oleh kesamaan makna batiniah.", type: "psikologi", ref: "Jung & Pauli — Synchronicity" }, { text: "Kausalitas lokal tidak mutlak; ada keterikatan non-lokal (entanglement) di mana hal-hal terikat secara instan.", type: "kuantum", ref: "John Bell — Teorema Non-Lokalitas" } ] },
+      { id: 5, scenario: "Dalam hubungan interpersonal, apa hal yang paling penting bagi Anda saat berdiskusi?", options: [ { text: "Kejujuran intelektual dan keberanian saling menguji kesahihan argumen tanpa prasangka.", type: "filosofi", ref: "Sokratik Intellectual Virtue" }, { text: "Keseimbangan elemen feminin/maskulin batin (Anima/Animus) dan pemahaman proyeksi interpersonal.", type: "psikologi", ref: "C.G. Jung — Anima/Animus" }, { text: "Pencegahan interferensi negatif dan menyadari bahwa kehadiran kita mengubah dinamika sistem.", type: "kuantum", ref: "Quantum Observer Effect" } ] },
+      { id: 6, scenario: "Apa makna dari 'Pengenalan Diri' (Self-Knowledge) menurut sudut pandang Anda?", options: [ { text: "Menyadari batas ketidaktahuan diri ('Saya tahu bahwa saya tidak tahu') untuk mencapai kebajikan.", type: "filosofi", ref: "Socrates — Gnothi Seauton" }, { text: "Mencapai keutuhan arketipal (The Self) melalui penyatuan alam sadar dan alam bawah sadar.", type: "psikologi", ref: "C.G. Jung — Process of Individuation" }, { text: "Menyadari bahwa kesadaran kita adalah bagian integral dari tatanan terlipat (Implicate Order) semesta.", type: "kuantum", ref: "David Bohm — Implicate Order" } ] },
+      { id: 7, scenario: "Bagaimana Anda memandang batasan pengetahuan dan persepsi manusia?", options: [ { text: "Pengalaman empiris hanyalah bayangan samar di dinding gua yang harus ditembus dengan nalar murni.", type: "filosofi", ref: "Plato — Garis Terbagi" }, { text: "Persepsi kita dibatasi dan dipola oleh arketipe purba universal dalam ketidaksadaran kolektif.", type: "psikologi", ref: "C.G. Jung — Ketidaksadaran Kolektif" }, { text: "Pengetahuan terbatasi oleh Prinsip Ketidakpastian: kita tidak bisa mengukur seluruh properti sistem sekaligus.", type: "kuantum", ref: "Heisenberg Uncertainty Principle" } ] },
+      { id: 8, scenario: "Saat berada dalam dilema etis yang membingungkan, apa kompas keputusan Anda?", options: [ { text: "Memilih prinsip kebajikan (Arete) yang menjaga keutuhan integritas jiwa di atas keselamatan fisik.", type: "filosofi", ref: "Socrates — Ethos & Arete" }, { text: "Mendengarkan simbolisme mimpi dan petunjuk arketipal untuk menyelaraskan batin.", type: "psikologi", ref: "C.G. Jung — Symbol Amplification" }, { text: "Mempertimbangkan seluruh spektrum probabilitas dan memilih potensi terbaik yang memicu hasil positif.", type: "kuantum", ref: "Quantum Decision Matrix" } ] },
+      { id: 9, scenario: "Bagaimana Anda membayangkan masa depan kesadaran manusia?", options: [ { text: "Masyarakat yang tercerahkan melalui pendidikan dialektis dan pemikiran bebas dari dogma.", type: "filosofi", ref: "Platonic Republic Philosophers" }, { text: "Transformasi kolektif menuju integrasi arketipe manusia utuh (Unus Mundus).", type: "psikologi", ref: "Jungian Unus Mundus" }, { text: "Penyatuan kesadaran dengan tatanan holistik alam semesta melampaui batasan ruang-waktu.", type: "kuantum", ref: "Bohmian Holomovement" } ] }
+    ];
+
+    // =========================================================================
+    // 7. GLOBAL STATE MANAGEMENT & INITIALIZATION
+    // =========================================================================
+    let currentQuizIndex = 0;
+    let quizAnswers = new Array(quizQuestions.length).fill(null);
+    let journalEntries = JSON.parse(localStorage.getItem('symphonia_journals') || '[]');
+    let completedModules = new Set(JSON.parse(localStorage.getItem('symphonia_completed') || '[]'));
+    let masteredFlashcards = new Set(JSON.parse(localStorage.getItem('symphonia_mastered_fc') || '[]'));
+    let unlockedBadges = new Set(JSON.parse(localStorage.getItem('symphonia_unlocked_badges') || '[]'));
+
+    let currentFlashcardIdx = 0;
+    let isFlashcardFlipped = false;
+    let activeSpeechBtnId = null;
+    let observerOn = false;
+    let currentMateriLevel = 'basic';
+    let activeDomainFilter = 'all';
+    let materiFontSizeScale = 0; // -1, 0, +1
+
+    // Audio Context state
+    let audioCtx = null;
+    let ambientSourceNode = null;
+    let ambientGainNode = null;
+    let isAmbientPlaying = false;
+    let currentAmbientType = 'rain';
+
+    window.onload = function() {
+      generateRandomQuote();
+      updateProgressTrackerUI();
+      renderMateriGrid('all');
+      renderFlashcardUI();
+      initDoubleSlitCanvas();
+      initJungDetail('ego');
+      initSocraticQuest(0);
+      renderQuizQuestion();
+      renderJournalEntries();
+      
+      calculateQuizScores();
+      checkBadgesProgress();
+      renderGlossaryList();
+      selectMapNode('unusmundus');
+    };
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function switchTab(tabId) {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (activeSpeechBtnId) resetSpeechBtnUI(activeSpeechBtnId);
+
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      const activeTab = document.getElementById(`sec-${tabId}`);
+      if (activeTab) activeTab.classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-800', 'text-white', 'shadow-sm', 'border-white/10');
+        btn.classList.add('text-slate-300');
+      });
+
+      const navBtn = document.getElementById(`nav-${tabId}`);
+      if (navBtn) {
+        navBtn.classList.add('bg-slate-800', 'text-white', 'shadow-sm', 'border-white/10');
+        navBtn.classList.remove('text-slate-300');
+      }
+
+      if (tabId === 'hasil') {
+        calculateQuizScores();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 8. AMBIENT FOCUS AUDIO GENERATOR (WEB AUDIO API SYNTHESIZER)
+    // =========================================================================
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAmbientSound() {
+      initAudioContext();
+
+      if (isAmbientPlaying) {
+        stopAmbientSound();
+        showToast("Focus Audio dimatikan.", "info");
+      } else {
+        startAmbientSound();
+        showToast(`Focus Audio (${currentAmbientType.toUpperCase()}) diaktifkan.`, "success");
+      }
+    }
+
+    function startAmbientSound() {
+      if (!audioCtx) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      stopAmbientSound();
+
+      ambientGainNode = audioCtx.createGain();
+      const sliderVal = parseFloat(document.getElementById('ambient-volume-slider')?.value || 0.3);
+      ambientGainNode.gain.setValueAtTime(sliderVal, audioCtx.currentTime);
+
+      if (currentAmbientType === 'rain') {
+        // Pink/White noise rain generator
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+        
+        for (let i = 0; i < bufferSize; i++) {
+          let white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          b3 = 0.86650 * b3 + white * 0.3104856;
+          b4 = 0.55000 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.0168980;
+          output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+          output[i] *= 0.11;
+          b6 = white * 0.115926;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+        whiteNoise.connect(filter);
+        filter.connect(ambientGainNode);
+        whiteNoise.start();
+        ambientSourceNode = whiteNoise;
+      } else if (currentAmbientType === 'alpha' || currentAmbientType === 'theta') {
+        // Binaural Beats synthesizer generator
+        const baseFreq = 200;
+        const beatFreq = currentAmbientType === 'alpha' ? 10 : 6;
+
+        const oscL = audioCtx.createOscillator();
+        const oscR = audioCtx.createOscillator();
+
+        oscL.type = 'sine';
+        oscR.type = 'sine';
+
+        oscL.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+        oscR.frequency.setValueAtTime(baseFreq + beatFreq, audioCtx.currentTime);
+
+        const merger = audioCtx.createChannelMerger(2);
+        oscL.connect(merger, 0, 0); // Left channel
+        oscR.connect(merger, 0, 1); // Right channel
+
+        merger.connect(ambientGainNode);
+
+        oscL.start();
+        oscR.start();
+        ambientSourceNode = { stop: () => { oscL.stop(); oscR.stop(); } };
+      }
+
+      ambientGainNode.connect(audioCtx.destination);
+      isAmbientPlaying = true;
+
+      const icon = document.getElementById('ambient-icon');
+      if (icon) icon.className = "fa-solid fa-volume-high text-cyan-400 glow-cyan animate-pulse";
+    }
+
+    function stopAmbientSound() {
+      if (ambientSourceNode && ambientSourceNode.stop) {
+        ambientSourceNode.stop();
+      }
+      isAmbientPlaying = false;
+      const icon = document.getElementById('ambient-icon');
+      if (icon) icon.className = "fa-solid fa-headphones text-cyan-400";
+    }
+
+    function setAmbientType(type) {
+      currentAmbientType = type;
+      if (isAmbientPlaying) {
+        startAmbientSound();
+      } else {
+        toggleAmbientSound();
+      }
+    }
+
+    function setAmbientVolume(val) {
+      if (ambientGainNode && audioCtx) {
+        ambientGainNode.gain.setValueAtTime(parseFloat(val), audioCtx.currentTime);
+      }
+    }
+
+    // =========================================================================
+    // 9. GAMIFIKASI & BADGES SYSTEM LOGIC
+    // =========================================================================
+    function checkBadgesProgress() {
+      const filDone = materiData.filter(m => m.domain === 'filosofi' && completedModules.has(m.id)).length;
+      const psiDone = materiData.filter(m => m.domain === 'psikologi' && completedModules.has(m.id)).length;
+      const quaDone = materiData.filter(m => m.domain === 'kuantum' && completedModules.has(m.id)).length;
+
+      if (completedModules.size >= 1) unlockedBadges.add('b1');
+      if (filDone >= 7) unlockedBadges.add('b2');
+      if (psiDone >= 7) unlockedBadges.add('b3');
+      if (quaDone >= 7) unlockedBadges.add('b4');
+      if (completedModules.size >= 21) unlockedBadges.add('b5');
+      if (masteredFlashcards.size >= 10) unlockedBadges.add('b6');
+      if (journalEntries.length >= 3) unlockedBadges.add('b7');
+      if (quizAnswers.filter(a => a !== null).length >= 9) unlockedBadges.add('b8');
+
+      localStorage.setItem('symphonia_unlocked_badges', JSON.stringify(Array.from(unlockedBadges)));
+
+      const badgeCountElem = document.getElementById('badges-unlocked-count');
+      if (badgeCountElem) badgeCountElem.innerText = `${unlockedBadges.size}/${badgesData.length}`;
+    }
+
+    function openBadgesModal() {
+      checkBadgesProgress();
+      const container = document.getElementById('badges-grid-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      badgesData.forEach(b => {
+        const isUnlocked = unlockedBadges.has(b.id);
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl border text-center transition-all ${
+          isUnlocked ? 'glass-panel border-purple-500/50 bg-slate-900/90 glow-violet' : 'bg-slate-950/40 border-white/5 opacity-40'
+        }`;
+        card.innerHTML = `
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-xl mb-2">
+            <i class="fa-solid ${b.icon}"></i>
+          </div>
+          <h4 class="text-xs font-bold text-white mb-1">${b.title}</h4>
+          <p class="text-[10px] text-slate-400 leading-tight">${b.desc}</p>
+          <span class="mt-2 inline-block px-2 py-0.5 rounded text-[9px] font-extrabold ${isUnlocked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-500'}">
+            ${isUnlocked ? 'Telah Terbuka' : 'Terkunci'}
+          </span>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('badges-modal')?.classList.remove('hidden');
+    }
+
+    function closeBadgesModal() {
+      document.getElementById('badges-modal')?.classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 10. GLOSARIUM MODAL LOGIC
+    // =========================================================================
+    let glossaryFilterCategory = 'all';
+
+    function openGlossaryModal() {
+      renderGlossaryList();
+      document.getElementById('glossary-modal')?.classList.remove('hidden');
+    }
+
+    function closeGlossaryModal() {
+      document.getElementById('glossary-modal')?.classList.add('hidden');
+    }
+
+    function filterGlossary(cat) {
+      glossaryFilterCategory = cat;
+      document.querySelectorAll('.gfilter-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-800', 'text-white');
+        btn.classList.add('bg-slate-900/60', 'text-slate-300');
+      });
+      const activeBtn = document.getElementById(`gfilter-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-slate-800', 'text-white');
+      }
+      renderGlossaryList();
+    }
+
+    function renderGlossaryList() {
+      const container = document.getElementById('glossary-list-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const searchVal = document.getElementById('glossary-search') ? document.getElementById('glossary-search').value.toLowerCase().trim() : '';
+
+      const filtered = glossaryData.filter(item => {
+        const matchesCat = (glossaryFilterCategory === 'all' || item.category === glossaryFilterCategory);
+        const matchesSearch = !searchVal || item.term.toLowerCase().includes(searchVal) || item.def.toLowerCase().includes(searchVal);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Tidak ditemukan istilah yang sesuai.</p>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        let tagColor = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+        if (item.category === 'psikologi') tagColor = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+        if (item.category === 'kuantum') tagColor = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+
+        const card = document.createElement('div');
+        card.className = 'p-3.5 rounded-2xl bg-slate-900/70 border border-white/5 space-y-1';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-white">${item.term}</h4>
+            <span class="px-2 py-0.5 rounded text-[9px] font-extrabold uppercase border ${tagColor}">${item.category}</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">${item.def}</p>
+          <span class="text-[10px] text-amber-300/80 font-semibold block pt-1"><i class="fa-solid fa-lightbulb mr-1"></i>${item.takeaway}</span>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // =========================================================================
+    // 11. CADANGAN & PEMULIHAN DATA (BACKUP & RESTORE)
+    // =========================================================================
+    function openBackupModal() {
+      document.getElementById('backup-modal')?.classList.remove('hidden');
+    }
+
+    function closeBackupModal() {
+      document.getElementById('backup-modal')?.classList.add('hidden');
+    }
+
+    function exportBackupJSON() {
+      const backupData = {
+        app: "Symphonia Mentis",
+        version: "2.0",
+        timestamp: Date.now(),
+        journals: journalEntries,
+        completedModules: Array.from(completedModules),
+        masteredFlashcards: Array.from(masteredFlashcards),
+        unlockedBadges: Array.from(unlockedBadges),
+        quizAnswers: quizAnswers
+      };
+
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `symphonia_backup_${Date.now()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      showToast("Cadangan berkas JSON berhasil diekspor!", "success");
+    }
+
+    function importBackupJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.journals) {
+            journalEntries = data.journals;
+            localStorage.setItem('symphonia_journals', JSON.stringify(journalEntries));
+          }
+          if (data.completedModules) {
+            completedModules = new Set(data.completedModules);
+            localStorage.setItem('symphonia_completed', JSON.stringify(data.completedModules));
+          }
+          if (data.masteredFlashcards) {
+            masteredFlashcards = new Set(data.masteredFlashcards);
+            localStorage.setItem('symphonia_mastered_fc', JSON.stringify(data.masteredFlashcards));
+          }
+          if (data.unlockedBadges) {
+            unlockedBadges = new Set(data.unlockedBadges);
+            localStorage.setItem('symphonia_unlocked_badges', JSON.stringify(data.unlockedBadges));
+          }
+          if (data.quizAnswers) {
+            quizAnswers = data.quizAnswers;
+          }
+
+          updateProgressTrackerUI();
+          renderMateriGrid(activeDomainFilter);
+          renderFlashcardUI();
+          renderJournalEntries();
+          calculateQuizScores();
+          checkBadgesProgress();
+
+          closeBackupModal();
+          showToast("Seluruh data berhasil dipulihkan!", "success");
+        } catch (err) {
+          showToast("Gagal memulihkan: Berkas JSON tidak valid.", "info");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // 12. EXPORT KARTU LENSA KOGNITIF (PNG IMAGE)
+    // =========================================================================
+    function exportResultCardPNG() {
+      const cardElem = document.getElementById('cognition-result-card');
+      if (!cardElem) return;
+
+      showToast("Memproses gambar PNG Lensa Kognitif...", "info");
+
+      html2canvas(cardElem, {
+        backgroundColor: '#070a12',
+        scale: 2,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Symphonia_Mentis_Cognitive_Lens_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast("Kartu hasil Lensa Kognitif berhasil diunduh!", "success");
+      }).catch(err => {
+        showToast("Gagal mengunduh gambar PNG.", "info");
+      });
+    }
+
+    // =========================================================================
+    // 13. PETA SINTERGI PENGETAHUAN (INTERACTIVE KNOWLEDGE NETWORK)
+    // =========================================================================
+    const mapData = {
+      aporia: { title: "Aporia Sokratik (Kebuntuan Kognitif)", domain: "Filosofi", desc: "Momen di mana pikiran menyadari ketidaktahuannya sewaktu dogma terbukti kontradiktif.", synthesis: "Aporia memicu keruntuhan proyeksi Shadow dalam psikologi, dan menciptakan superposisi mental tempat terbukanya potensi baru." },
+      forms: { title: "Dunia Ide / Forms Plato", domain: "Filosofi", desc: "Tatanan realitas sejati abadi yang berada di balik bayangan empiris indrawi manusia.", synthesis: "Dunia Ide Plato bersinergi langsung dengan Arketipe Jungian dan Tatanan Terlipat (Implicate Order) David Bohm." },
+      archetype: { title: "Arketipe Jungian", domain: "Psikologi", desc: "Pola struktural apriori universal dalam ketidaksadaran kolektif manusia.", synthesis: "Arketipe adalah perwujudan psikologis dari Bentuk Ide Plato yang membentuk persepsi manusia secara apriori." },
+      shadow: { title: "Shadow Work (Integrasi Sisi Gelap)", domain: "Psikologi", desc: "Proses mengenali dan menyatukan aspek tertekan batin agar tidak memproyeksikan prasangka.", synthesis: "Memerlukan kejujuran Aporia Sokratik untuk membebaskan ego dari ilusi moral palsu." },
+      observer: { title: "Effek Pengamat (Quantum Observer)", domain: "Fisika Kuantum", desc: "Prinsip bahwa tindakan pengukuran meruntuhkan fungsi gelombang potensi menjadi fakta.", synthesis: "Mengamati batin (mindfulness) secara analitis meruntuhkan gelombang kecemasan menjadi kedamaian." },
+      unusmundus: { title: "Unus Mundus (Sintergi Trias)", domain: "Holistik Sintesis", desc: "Matriks dasar alam semesta tunggal tempat materi fisik, struktur batin, dan kebenaran rasional bersatu.", synthesis: "Sintesis puncak Symphonia Mentis: Mengintegrasikan pikiran rasional Sokratik, kesehatan jiwa Jungian, dan kesadaran kuantum." }
+    };
+
+    const linkData = {
+      link1: { title: "Transendensi Idealis (Aporia <-> Dunia Ide)", desc: "Aporia membebaskan jiwa dari bayangan gua empiris untuk mendaki menuju kontemplasi Dunia Ide Sejati." },
+      link2: { title: "Manifestasi Struktural (Dunia Ide <-> Arketipe)", desc: "Arketipe Jungian adalah jembatan psikologis dari Bentuk Abadi Dunia Ide Plato ke dalam pengalaman bawah sadar manusia." },
+      link3: { title: "Penyucian Batin (Aporia <-> Shadow Work)", desc: "Keberanian menghadapi Aporia secara intelektual adalah prasyarat utama untuk membongkar proyeksi Shadow." },
+      link4: { title: "Peruntuhan Potensi (Dunia Ide <-> Observer)", desc: "Tindakan pengamatan sadar meruntuhkan fungsi gelombang potensi kuantum menjadi manifestasi nyata." },
+      link5: { title: "Sinkronisitas Psiko-Fisik (Shadow <-> Observer)", desc: "Keterikatan antara kesadaran batiniah dan runtuhnya realitas fisik tanpa batasan jarak kausal." }
+    };
+
+    function selectMapNode(key) {
+      const data = mapData[key];
+      const card = document.getElementById('map-detail-card');
+      if (!card || !data) return;
+      card.innerHTML = `
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mb-2 inline-block">${data.domain}</span>
+        <h3 class="text-base font-bold text-white mb-1">${data.title}</h3>
+        <p class="text-xs text-slate-300 leading-relaxed mb-3">${data.desc}</p>
+        <div class="p-3 rounded-xl bg-slate-950/70 border border-white/5 space-y-1">
+          <strong class="text-xs text-amber-400 font-bold block"><i class="fa-solid fa-arrows-spin mr-1"></i>Sintesis Sintergi Trias:</strong>
+          <p class="text-[11px] text-slate-300 leading-relaxed">${data.synthesis}</p>
+        </div>
+      `;
+    }
+
+    function selectMapLink(key) {
+      const data = linkData[key];
+      const card = document.getElementById('map-detail-card');
+      if (!card || !data) return;
+      card.innerHTML = `
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-2 inline-block">Keterhubungan Jalur Sintergi</span>
+        <h3 class="text-base font-bold text-white mb-1">${data.title}</h3>
+        <p class="text-xs text-slate-200 leading-relaxed bg-slate-950/60 p-3 rounded-xl border border-white/5">${data.desc}</p>
+      `;
+    }
+
+    // =========================================================================
+    // 14. QUOTE GENERATOR LOGIC
+    // =========================================================================
+    function generateRandomQuote() {
+      const qDisplay = document.getElementById('quote-text-display');
+      const fBadge = document.getElementById('quote-figure-badge');
+      const sDisplay = document.getElementById('quote-source-display');
+
+      if (!qDisplay) return;
+      qDisplay.style.opacity = '0';
+
+      setTimeout(() => {
+        const randIdx = Math.floor(Math.random() * quoteData.length);
+        const item = quoteData[randIdx];
+
+        qDisplay.innerText = `"${item.quote}"`;
+        if (fBadge) fBadge.innerText = item.figure;
+        if (sDisplay) sDisplay.innerText = `— ${item.source}`;
+
+        qDisplay.style.opacity = '1';
+      }, 200);
+    }
+
+    // =========================================================================
+    // 15. PROGRESS TRACKER & BOOKMARK LOGIC
+    // =========================================================================
+    function toggleModuleCompleted(materiId) {
+      if (completedModules.has(materiId)) {
+        completedModules.delete(materiId);
+        showToast("Modul ditandai Belum Selesai.", "info");
+      } else {
+        completedModules.add(materiId);
+        showToast("Modul berhasil ditandai Selesai!", "success");
+      }
+
+      localStorage.setItem('symphonia_completed', JSON.stringify(Array.from(completedModules)));
+      updateProgressTrackerUI();
+      renderMateriGrid(activeDomainFilter);
+      checkBadgesProgress();
+    }
+
+    function updateProgressTrackerUI() {
+      const count = completedModules.size;
+      const total = materiData.length;
+      const percent = Math.round((count / total) * 100);
+
+      const navText = document.getElementById('nav-progress-text');
+      const navBar = document.getElementById('nav-progress-bar');
+      const mobText = document.getElementById('mobile-nav-progress-text');
+      const countText = document.getElementById('materi-progress-count');
+
+      if (navText) navText.innerText = `${count} / ${total} (${percent}%)`;
+      if (navBar) navBar.style.width = `${percent}%`;
+
+      if (mobText) mobText.innerText = `${count} / ${total} Selesai (${percent}%)`;
+      if (countText) countText.innerText = `${count} dari ${total} Selesai`;
+    }
+
+    function resetAllModuleProgress() {
+      if (completedModules.size === 0) return;
+      completedModules.clear();
+      localStorage.setItem('symphonia_completed', JSON.stringify([]));
+      updateProgressTrackerUI();
+      renderMateriGrid(activeDomainFilter);
+      showToast("Seluruh progres materi telah di-reset.", "info");
+    }
+
+    // =========================================================================
+    // 16. AUDIO NARASI TEXT-TO-SPEECH WEB API
+    // =========================================================================
+    function toggleAudioSpeech(materiId, textToRead) {
+      const btnId = `speech-btn-${materiId}`;
+      const btn = document.getElementById(btnId);
+
+      if (!('speechSynthesis' in window)) {
+        showToast("Browser Anda tidak mendukung Web Speech API.", "info");
+        return;
+      }
+
+      if (window.speechSynthesis.speaking && activeSpeechBtnId === btnId) {
+        window.speechSynthesis.cancel();
+        resetSpeechBtnUI(btnId);
+        activeSpeechBtnId = null;
+        showToast("Audio narasi dihentikan.", "info");
+        return;
+      }
+
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        if (activeSpeechBtnId) resetSpeechBtnUI(activeSpeechBtnId);
+      }
+
+      const utterance = new SpeechSynthesisUtterance(textToRead);
+      utterance.lang = 'id-ID';
+      utterance.rate = 0.95;
+
+      utterance.onstart = function() {
+        activeSpeechBtnId = btnId;
+        if (btn) {
+          btn.innerHTML = '<i class="fa-solid fa-square text-rose-400"></i> Stop Audio';
+          btn.classList.add('glow-cyan', 'border-cyan-400');
+        }
+      };
+
+      utterance.onend = function() {
+        resetSpeechBtnUI(btnId);
+        activeSpeechBtnId = null;
+      };
+
+      utterance.onerror = function() {
+        resetSpeechBtnUI(btnId);
+        activeSpeechBtnId = null;
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function resetSpeechBtnUI(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-volume-high text-cyan-400"></i> Audio Narasi';
+        btn.classList.remove('glow-cyan', 'border-cyan-400');
+      }
+    }
+
+    // =========================================================================
+    // 17. ACTIVE RECALL FLASHCARDS LOGIC
+    // =========================================================================
+    function renderFlashcardUI() {
+      const card = flashcardData[currentFlashcardIdx];
+      const inner = document.getElementById('flashcard-inner');
+      if (!inner || !card) return;
+
+      isFlashcardFlipped = false;
+      inner.classList.remove('is-flipped');
+
+      const progText = document.getElementById('fc-progress-text');
+      const mastText = document.getElementById('fc-mastered-text');
+      if (progText) progText.innerText = `Kartu ${currentFlashcardIdx + 1} dari ${flashcardData.length}`;
+      if (mastText) mastText.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i>${masteredFlashcards.size} Dikuasai`;
+
+      // Front
+      const termFront = document.getElementById('fc-term-front');
+      const promptFront = document.getElementById('fc-prompt-front');
+      if (termFront) termFront.innerText = card.term;
+      if (promptFront) promptFront.innerText = card.prompt;
+
+      let catBadge = 'Filosofi';
+      let catClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      if (card.category === 'psikologi') {
+        catBadge = 'Psikologi';
+        catClass = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+      } else if (card.category === 'kuantum') {
+        catBadge = 'Fisika Kuantum';
+        catClass = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+      }
+
+      const fBadgeElem = document.getElementById('fc-category-badge');
+      if (fBadgeElem) {
+        fBadgeElem.innerText = catBadge;
+        fBadgeElem.className = `px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider border ${catClass}`;
+      }
+
+      const isMastered = masteredFlashcards.has(card.term);
+      const mBadgeFront = document.getElementById('fc-mastered-badge');
+      const mBtn = document.getElementById('fc-toggle-mastered-btn');
+
+      if (mBadgeFront && mBtn) {
+        if (isMastered) {
+          mBadgeFront.classList.remove('hidden');
+          mBtn.innerHTML = '<i class="fa-solid fa-xmark mr-1.5"></i> Batal Dikuasai';
+          mBtn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-white/10 hover:bg-slate-700";
+        } else {
+          mBadgeFront.classList.add('hidden');
+          mBtn.innerHTML = '<i class="fa-solid fa-check mr-1.5"></i> Tandai Dikuasai';
+          mBtn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30";
+        }
+      }
+
+      // Back
+      const termBack = document.getElementById('fc-term-back');
+      const descBack = document.getElementById('fc-desc-back');
+      const takeBack = document.getElementById('fc-takeaway-back');
+
+      if (termBack) termBack.innerText = card.titleBack;
+      if (descBack) descBack.innerText = card.descBack;
+      if (takeBack) takeBack.innerText = card.takeawayBack;
+    }
+
+    function toggleFlashcardFlip() {
+      isFlashcardFlipped = !isFlashcardFlipped;
+      const inner = document.getElementById('flashcard-inner');
+      if (!inner) return;
+      if (isFlashcardFlipped) inner.classList.add('is-flipped');
+      else inner.classList.remove('is-flipped');
+    }
+
+    function nextFlashcard() {
+      currentFlashcardIdx = (currentFlashcardIdx + 1) % flashcardData.length;
+      renderFlashcardUI();
+    }
+
+    function prevFlashcard() {
+      currentFlashcardIdx = (currentFlashcardIdx - 1 + flashcardData.length) % flashcardData.length;
+      renderFlashcardUI();
+    }
+
+    function shuffleFlashcards() {
+      flashcardData.sort(() => Math.random() - 0.5);
+      currentFlashcardIdx = 0;
+      renderFlashcardUI();
+      showToast("Kartu flashcard diacak secara acak!", "info");
+    }
+
+    function toggleMasteredFlashcard() {
+      const card = flashcardData[currentFlashcardIdx];
+      if (masteredFlashcards.has(card.term)) {
+        masteredFlashcards.delete(card.term);
+        showToast("Kartu dihapus dari daftar dikuasai.", "info");
+      } else {
+        masteredFlashcards.add(card.term);
+        showToast("Kartu ditandai Dikuasai!", "success");
+      }
+
+      localStorage.setItem('symphonia_mastered_fc', JSON.stringify(Array.from(masteredFlashcards)));
+      renderFlashcardUI();
+      checkBadgesProgress();
+    }
+
+    // =========================================================================
+    // 18. RENDER MATERI GRID LOGIC
+    // =========================================================================
+    function adjustMateriFontSize(delta) {
+      if (delta === 0) materiFontSizeScale = 0;
+      else materiFontSizeScale = Math.max(-1, Math.min(2, materiFontSizeScale + delta));
+      renderMateriGrid(activeDomainFilter);
+    }
+
+    function setGlobalMateriLevel(level) {
+      currentMateriLevel = level;
+      
+      const btnBasic = document.getElementById('level-btn-basic');
+      const btnAdv = document.getElementById('level-btn-advanced');
+
+      if (btnBasic && btnAdv) {
+        if (level === 'basic') {
+          btnBasic.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-purple-600 text-white shadow-sm";
+          btnAdv.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white";
+        } else {
+          btnAdv.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-purple-600 text-white shadow-sm";
+          btnBasic.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white";
+        }
+      }
+
+      renderMateriGrid(activeDomainFilter);
+    }
+
+    function filterMateri(domain) {
+      activeDomainFilter = domain;
+      document.querySelectorAll('.mfilter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-slate-800', 'text-white', 'border-white/20');
+        btn.classList.add('bg-slate-900/60', 'text-slate-300');
+      });
+
+      const activeBtn = document.getElementById(`mfilter-${domain}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-slate-800', 'text-white', 'border-white/20');
+        activeBtn.classList.remove('bg-slate-900/60', 'text-slate-300');
+      }
+
+      renderMateriGrid(domain);
+    }
+
+    function renderMateriGrid(domainFilter) {
+      const grid = document.getElementById('materi-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const searchInput = document.getElementById('materi-search-input');
+      const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+      const filtered = materiData.filter(m => {
+        const matchesDomain = (domainFilter === 'all' || m.domain === domainFilter);
+        const matchesSearch = !searchVal || 
+          m.title.toLowerCase().includes(searchVal) ||
+          m.figure.toLowerCase().includes(searchVal) ||
+          m.sourceText.toLowerCase().includes(searchVal) ||
+          m.basicText.toLowerCase().includes(searchVal) ||
+          m.advancedText.toLowerCase().includes(searchVal);
+        return matchesDomain && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full glass-panel rounded-2xl p-8 text-center text-slate-400">
+            <i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-slate-600"></i>
+            <p class="text-sm font-semibold text-slate-300">Tidak ada modul yang sesuai dengan pencarian Anda.</p>
+            <p class="text-xs text-slate-500 mt-1">Coba kata kunci lain atau pilih kategori domain di atas.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let textSizeClass = "text-xs";
+      if (materiFontSizeScale === 1) textSizeClass = "text-sm";
+      if (materiFontSizeScale === 2) textSizeClass = "text-base";
+      if (materiFontSizeScale === -1) textSizeClass = "text-[11px]";
+
+      filtered.forEach(m => {
+        let badge = '';
+        if (m.domain === 'filosofi') badge = `<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20"><i class="fa-solid fa-scroll mr-1"></i> Filosofi</span>`;
+        else if (m.domain === 'psikologi') badge = `<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/20"><i class="fa-solid fa-masks-theater mr-1"></i> Psikologi</span>`;
+        else badge = `<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"><i class="fa-solid fa-atom mr-1"></i> Kuantum</span>`;
+
+        const bodyText = currentMateriLevel === 'basic' ? m.basicText : m.advancedText;
+        const levelTag = currentMateriLevel === 'basic' ? 'Tingkat Umum' : 'Tingkat Mendalam';
+        
+        const wordCount = bodyText.split(' ').length;
+        const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 50));
+
+        const isDone = completedModules.has(m.id);
+        const doneBadge = isDone 
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"><i class="fa-solid fa-circle-check mr-1"></i>Selesai</span>` 
+          : '';
+
+        const card = document.createElement('div');
+        card.className = `glass-panel rounded-2xl p-6 transition-all duration-300 hover:translate-y-[-4px] flex flex-col justify-between border-t ${isDone ? 'border-emerald-500/50 glow-cyan' : 'border-white/10'}`;
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                ${badge}
+                ${doneBadge}
+              </div>
+              <span class="text-[10px] font-semibold text-slate-400">${m.figure}</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-2 leading-snug">${m.title}</h3>
+            <div class="flex items-center justify-between text-[11px] text-slate-400 font-medium mb-3">
+              <span><i class="fa-solid fa-book-bookmark mr-1 text-slate-500"></i> ${m.sourceText}</span>
+              <span class="text-[10px] text-amber-300/90 font-semibold"><i class="fa-regular fa-clock mr-1"></i>⏱️ ${readTimeMinutes} min baca</span>
+            </div>
+            <p class="text-xs italic text-slate-300 bg-slate-950/50 p-3 rounded-xl border border-white/5 mb-4 leading-relaxed">${m.quote}</p>
+            
+            <div class="mb-4">
+              <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 mb-2">${levelTag}</span>
+              <p class="${textSizeClass} text-slate-300 leading-relaxed transition-all">${bodyText}</p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-white/5 space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <button id="speech-btn-${m.id}" onclick="toggleAudioSpeech('${m.id}', '${bodyText.replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-volume-high text-cyan-400"></i> Audio Narasi
+              </button>
+
+              <button onclick="toggleModuleCompleted('${m.id}')" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all flex items-center gap-1.5 ${isDone ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30' : 'bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20'}">
+                <i class="fa-solid ${isDone ? 'fa-circle-check' : 'fa-bookmark'}"></i> ${isDone ? 'Selesai' : 'Tandai Selesai'}
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <button onclick="toggleCardLevel('${m.id}')" class="text-[10px] font-bold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
+                <i class="fa-solid fa-arrows-rotate text-[9px]"></i> Switch ke ${currentMateriLevel === 'basic' ? 'Mendalam' : 'Dasar'}
+              </button>
+              <span class="text-[10px] text-slate-500">Symphonia Mentis</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleCardLevel(materiId) {
+      setGlobalMateriLevel(currentMateriLevel === 'basic' ? 'advanced' : 'basic');
+    }
+
+    // =========================================================================
+    // 19. LAB INTERAKTIF LOGIC & CANVAS DOUBLE SLIT
+    // =========================================================================
+    let photons = [];
+    let backWallHits = new Array(380).fill(0);
+    let totalPhotonCount = 0;
+
+    function switchLab(labId) {
+      document.querySelectorAll('.lab-content').forEach(l => l.classList.add('hidden'));
+      document.getElementById(`lab-${labId}`)?.classList.remove('hidden');
+
+      document.querySelectorAll('.lab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'glow-cyan');
+        btn.classList.add('bg-slate-900/60', 'text-slate-300', 'border-white/10');
+      });
+
+      const activeBtn = document.getElementById(`labtab-${labId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'glow-cyan');
+        activeBtn.classList.remove('bg-slate-900/60', 'text-slate-300', 'border-white/10');
+      }
+    }
+
+    function toggleObserver() {
+      observerOn = !observerOn;
+      const btn = document.getElementById('btn-toggle-observer');
+      const statObs = document.getElementById('stat-observer-text');
+      const statPat = document.getElementById('stat-pattern-text');
+      const statPsi = document.getElementById('stat-psi-text');
+
+      if (observerOn) {
+        if (btn) {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30";
+          btn.innerHTML = '<i class="fa-solid fa-eye mr-1.5"></i> Pengamat (Observer): ON';
+        }
+        if (statObs) {
+          statObs.innerText = "ON (Aktif)";
+          statObs.className = "text-base font-extrabold text-emerald-400";
+        }
+        if (statPat) {
+          statPat.innerText = "2 Band Partikel Padat";
+          statPat.className = "text-base font-extrabold text-amber-400";
+        }
+        if (statPsi) {
+          statPsi.innerText = "Runtuh (Collapsed)";
+          statPsi.className = "text-base font-extrabold text-rose-400";
+        }
+        showToast("Pengamat Aktif: Fungsi gelombang runtuh menjadi partikel padat!", "info");
+      } else {
+        if (btn) {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30";
+          btn.innerHTML = '<i class="fa-solid fa-eye-slash mr-1.5"></i> Pengamat (Observer): OFF';
+        }
+        if (statObs) {
+          statObs.innerText = "OFF (Potensi)";
+          statObs.className = "text-base font-extrabold text-rose-400";
+        }
+        if (statPat) {
+          statPat.innerText = "Pola Interferensi Gelombang";
+          statPat.className = "text-base font-extrabold text-cyan-400";
+        }
+        if (statPsi) {
+          statPsi.innerText = "Superposisi Kuantum";
+          statPsi.className = "text-base font-extrabold text-purple-400";
+        }
+        showToast("Pengamat Dimatikan: Foton kembali ke fungsi gelombang probabilitas!", "info");
+      }
+    }
+
+    function resetCanvasSim() {
+      backWallHits.fill(0);
+      photons = [];
+      totalPhotonCount = 0;
+      const countElem = document.getElementById('stat-photons');
+      if (countElem) countElem.innerText = "0";
+    }
+
+    function initDoubleSlitCanvas() {
+      const canvas = document.getElementById('canvasDoubleSlit');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function animate() {
+        ctx.fillStyle = "rgba(7, 10, 18, 0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Barrier
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(240, 0, 12, 130);
+        ctx.fillRect(240, 160, 12, 60);
+        ctx.fillRect(240, 250, 12, 130);
+
+        // Back Wall
+        ctx.fillStyle = "#1E293B";
+        ctx.fillRect(720, 0, 8, canvas.height);
+
+        // Photon Emit
+        if (Math.random() < 0.6) {
+          totalPhotonCount++;
+          const pStat = document.getElementById('stat-photons');
+          if (pStat) pStat.innerText = totalPhotonCount;
+
+          let targetY;
+          if (observerOn) {
+            const slit = Math.random() < 0.5 ? 145 : 235;
+            targetY = slit + (Math.random() - 0.5) * 35;
+          } else {
+            let valid = false;
+            while (!valid) {
+              const testY = Math.random() * canvas.height;
+              const normY = (testY - canvas.height / 2) / 30;
+              const prob = Math.pow(Math.cos(normY), 2) * Math.exp(-Math.pow(normY / 4, 2));
+              if (Math.random() < prob) {
+                targetY = testY;
+                valid = true;
+              }
+            }
+          }
+
+          photons.push({
+            x: 40,
+            y: canvas.height / 2 + (Math.random() - 0.5) * 20,
+            targetY: targetY,
+            speed: 5 + Math.random() * 2,
+            passedSlit: false,
+            color: observerOn ? '#F59E0B' : '#06B6D4'
+          });
+        }
+
+        for (let i = photons.length - 1; i >= 0; i--) {
+          let p = photons[i];
+          p.x += p.speed;
+
+          if (p.x > 250 && !p.passedSlit) {
+            p.passedSlit = true;
+          }
+
+          if (p.passedSlit) {
+            p.y += (p.targetY - p.y) * 0.08;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, observerOn ? 2.5 : 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = observerOn ? 4 : 8;
+          ctx.shadowColor = p.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          if (p.x >= 715) {
+            const hitY = Math.floor(p.y);
+            if (hitY >= 0 && hitY < canvas.height) {
+              backWallHits[hitY] += 1;
+            }
+            photons.splice(i, 1);
+          }
+        }
+
+        ctx.fillStyle = observerOn ? "rgba(245, 158, 11, 0.75)" : "rgba(6, 182, 212, 0.75)";
+        for (let y = 0; y < canvas.height; y += 2) {
+          const hits = backWallHits[y] || 0;
+          if (hits > 0) {
+            const barWidth = Math.min(hits * 1.5, 70);
+            ctx.fillRect(728, y, barWidth, 2);
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    // =========================================================================
+    // 20. JUNGIAN PSYCHE EXPLORER LOGIC
+    // =========================================================================
+    const jungData = {
+      ego: { title: "EGO & THE SELF (Pusat Kesadaran & Keutuhan)", subtitle: "Titik Pusat Integrasi Jiwa Utuh", desc: "Ego adalah pusat pikiran sadar sehari-hari. Namun tujuan akhir dari perjalanan jiwa adalah *The Self*—pusat keutuhan arketipal yang menyatukan alam sadar dan tak sadar.", quote: '"Ego berdiri di atas kesadaran seperti pulau kecil di atas samudra luas."', source: "C.G. Jung — 'Aion: Phenomenology of the Self'" },
+      persona: { title: "PERSONA (Topeng Sosial Adaptif)", subtitle: "Kompromi Antara Individu dan Masyarakat", desc: "Persona adalah topeng psikologis yang kita pakai saat berinteraksi sosial untuk memenuhi norma masyarakat. Persona penting untuk adaptasi, tetapi berbahaya jika ego mengidentifikasi dirinya secara mutlak dengan topeng ini.", quote: '"Persona adalah kompromi antara individu dan masyarakat tentang bagaimana seseorang seharusnya tampak."', source: "C.G. Jung — 'Two Essays on Analytical Psychology'" },
+      shadow: { title: "SHADOW & ANIMA/ANIMUS", subtitle: "Sisi Gelap & Dualitas Gender Psikis Batiniah", desc: "Shadow memuat aspek insting dan trauma tertekan yang sering kita proyeksikan pada orang lain. Sementara Anima (elemen feminin pada pria) dan Animus (elemen maskulin pada wanita) berfungsi sebagai jembatan menuju ketidaksadaran kolektif.", quote: '"Hingga kau membuat Shadow menjadi sadar, ia akan mengarahkan hidupmu dan kau sebut itu takdir."', source: "C.G. Jung — 'Structure & Dynamics of the Psyche'" },
+      collective: { title: "KETIDAKSADARAN KOLEKTIF (Collective Unconscious)", subtitle: "Samudra Memori Purba & Arketipe Universal", desc: "Lapisan terdalam psikhe manusia yang tidak berasal dari pengalaman pribadi, melainkan diwariskan secara biologis dan psikologis dari seluruh perjalanan evolusi leluhur peradaban manusia.", quote: '"Arketipe adalah warisan memori purba dari seluruh peradaban manusia yang hidup dalam batin kita."', source: "C.G. Jung — 'The Archetypes and Collective Unconscious'" }
+    };
+
+    function selectJungZone(zoneKey) {
+      const data = jungData[zoneKey];
+      const box = document.getElementById('jung-detail-box');
+      if (!box || !data) return;
+
+      box.className = `glass-panel rounded-2xl p-6 border-l-4 transition-all duration-300 bg-slate-900/80 ${
+        zoneKey === 'ego' ? 'border-cyan-400' : zoneKey === 'persona' ? 'border-amber-400' : zoneKey === 'shadow' ? 'border-rose-400' : 'border-purple-400'
+      }`;
+
+      box.innerHTML = `
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">${data.subtitle}</span>
+        <h3 class="text-lg font-bold text-white mb-2">${data.title}</h3>
+        <p class="text-xs italic text-slate-300 bg-slate-950/60 p-3 rounded-xl border border-white/5 mb-3 leading-relaxed">${data.quote}</p>
+        <p class="text-xs text-slate-300 leading-relaxed mb-3">${data.desc}</p>
+        <span class="text-[10px] font-semibold text-purple-400"><i class="fa-solid fa-book-bookmark mr-1"></i> ${data.source}</span>
+      `;
+    }
+
+    function initJungDetail(key) {
+      selectJungZone(key);
+    }
+
+    // =========================================================================
+    // 21. SOCRATIC ELENCHUS SIMULATOR
+    // =========================================================================
+    const socraticNodes = [
+      { id: 0, socratesMsg: "Selamat datang, Sahabatku. Mari kita uji pemahamanmu. Apakah menurutmu 'Keadilan' adalah kewajiban mutlak untuk selalu mengembalikan apa yang kita pinjam dari orang lain?", options: [ { text: "Tentu saja! Kejujuran dan mengembalikan milik orang lain adalah definisi keadilan mutlak.", nextId: 1 }, { text: "Tidak selalu, keadilan tergantung pada situasi dan niat pemilik benda tersebut.", nextId: 2 } ] },
+      { id: 1, socratesMsg: "Bayangkan sahabatmu meminjamkan pedangnya padamu saat ia sadar. Namun saat ia memintanya kembali, ia dalam keadaan mengamuk gila. Apakah adil memberikannya kembali?", options: [ { text: "Tentu tidak! Memberikannya pedang saat gila justru akan membahayakan nyawanya.", nextId: 3 }, { text: "Tetap harus diberikan karena itu adalah hak milik pribadinya secara hukum.", nextId: 4 } ] },
+      { id: 2, socratesMsg: "Jika keadilan tergantung pada 'situasi', apakah arti keadilan menjadi relatif sesuai keinginan siapapun yang sedang berkuasa saat itu?", options: [ { text: "Tidak, keadilan harus memiliki ukuran kebaikan yang objektif bagi jiwa manusia.", nextId: 3 }, { text: "Ya, keadilan memang ditentukan oleh pihak yang lebih kuat.", nextId: 4 } ] },
+      { id: 3, aporia: true, socratesMsg: "Lihatlah! Definisi awalmu tentang keadilan telah runtuh oleh kontradiksimu sendiri. Engkau kini menyadari bahwa engkau tidak tahu apa sebenarnya hakikat Keadilan itu.", conclusion: "Selamat! Engkau telah mencapai kondisi APORIA (Kebingungan Konstruktif). Dari titik ketidaktahuan inilah pencarian kebijaksanaan sejati baru saja dimulai." },
+      { id: 4, aporia: true, socratesMsg: "Jika keadilan merugikan orang banyak atau hanya menguntungkan penguasa, maka keadilan berubah menjadi kejahatan yang dilegalisasi. Aksioma awalmu terbukti kontradiktif!", conclusion: "Engkau telah mengalami Uji Elenchus. Asumsi awalmu terbukti palsu, membawamu pada APORIA sebagai pintu pembersihan jiwa." }
+    ];
+
+    function initSocraticQuest(nodeId) {
+      const node = socraticNodes.find(n => n.id === nodeId);
+      const card = document.getElementById('socratic-dialogue-card');
+      if (!card || !node) return;
+
+      if (node.aporia) {
+        card.innerHTML = `
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-500/30">
+              <i class="fa-solid fa-scroll"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Socrates (Aporia Reached)</h4>
+              <span class="text-[10px] text-amber-400 font-semibold">Uji Elenchus Selesai</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-amber-500/20 italic mb-4">
+            "${node.socratesMsg}"
+          </p>
+          <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 mb-6">
+            <span class="text-xs font-bold text-amber-300 block mb-1">Pelajaran Kebijaksanaan:</span>
+            <p class="text-xs text-slate-300 leading-relaxed">${node.conclusion}</p>
+          </div>
+          <button onclick="initSocraticQuest(0)" class="w-full py-2.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 shadow-lg shadow-amber-500/20">
+            <i class="fa-solid fa-rotate-left mr-1.5"></i> Ulangi Simulasi Dialektika
+          </button>
+        `;
+      } else {
+        let optsHtml = '';
+        node.options.forEach(opt => {
+          optsHtml += `
+            <button onclick="initSocraticQuest(${opt.nextId})" class="w-full text-left p-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 border border-white/10 hover:border-amber-500/40 text-xs text-slate-200 transition-all mb-2.5 flex items-center justify-between group">
+              <span>${opt.text}</span>
+              <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-amber-400 transition-transform group-hover:translate-x-1"></i>
+            </button>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-500/30">
+              <i class="fa-solid fa-quote-left"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">Socrates</h4>
+              <span class="text-[10px] text-slate-400">Dialog 'Plato's Republic'</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-200 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-white/5 italic mb-6">
+            "${node.socratesMsg}"
+          </p>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block mb-2">Pilih Respon Logis Anda:</span>
+          <div>${optsHtml}</div>
+        `;
+      }
+    }
+
+    // =========================================================================
+    // 22. ENGINE KUIS DIAGNOSTIK
+    // =========================================================================
+    function renderQuizQuestion() {
+      const q = quizQuestions[currentQuizIndex];
+      const container = document.getElementById('quiz-card-content');
+      if (!container || !q) return;
+
+      const progressPercent = Math.round(((currentQuizIndex + 1) / quizQuestions.length) * 100);
+      const qProgText = document.getElementById('quiz-progress-text');
+      const qPercText = document.getElementById('quiz-percent-text');
+      const qBar = document.getElementById('quiz-progress-bar');
+
+      if (qProgText) qProgText.innerText = `Soal ${currentQuizIndex + 1} dari ${quizQuestions.length}`;
+      if (qPercText) qPercText.innerText = `${progressPercent}% Selesai`;
+      if (qBar) qBar.style.width = `${progressPercent}%`;
+
+      const selectedOptIdx = quizAnswers[currentQuizIndex];
+
+      let optsHtml = '';
+      q.options.forEach((opt, idx) => {
+        const isSelected = selectedOptIdx === idx;
+        let borderClass = 'border-white/10 hover:border-purple-500/40 bg-slate-900/40';
+        let checkIcon = '<div class="w-5 h-5 rounded-full border border-slate-600 flex items-center justify-center text-xs"></div>';
+
+        if (isSelected) {
+          borderClass = 'border-purple-500 bg-purple-500/10 shadow-[0_0_15px_rgba(168,85,247,0.15)]';
+          checkIcon = '<div class="w-5 h-5 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-check"></i></div>';
+        }
+
+        optsHtml += `
+          <button onclick="selectQuizOption(${idx})" class="w-full text-left p-4 rounded-2xl border ${borderClass} transition-all duration-200 flex items-start gap-3 group mb-3">
+            <div class="mt-0.5">${checkIcon}</div>
+            <div class="flex-1">
+              <p class="text-xs sm:text-sm text-slate-200 font-medium group-hover:text-white leading-relaxed">${opt.text}</p>
+            </div>
+          </button>
+        `;
+      });
+
+      let feedbackHtml = '';
+      if (selectedOptIdx !== null && selectedOptIdx !== undefined) {
+        const selectedOpt = q.options[selectedOptIdx];
+        feedbackHtml = `
+          <div class="mt-6 p-4 rounded-2xl bg-slate-950/70 border border-purple-500/30">
+            <div class="flex items-center gap-2 text-xs font-bold text-purple-400 mb-1">
+              <i class="fa-solid fa-book-bookmark"></i> Instant Feedback Rujukan: ${selectedOpt.ref}
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">Pilihan ini mencerminkan orientasi pemikiran dominan <strong class="text-white uppercase">${selectedOpt.type}</strong>.</p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-purple-400 mb-2 block">Skenario #${q.id}</span>
+        <h3 class="text-base sm:text-lg font-bold text-white leading-snug mb-6">${q.scenario}</h3>
+        <div class="space-y-1">${optsHtml}</div>
+        ${feedbackHtml}
+      `;
+
+      const prevBtn = document.getElementById('quiz-prev-btn');
+      const nextBtn = document.getElementById('quiz-next-btn');
+
+      if (prevBtn) prevBtn.disabled = currentQuizIndex === 0;
+
+      if (nextBtn) {
+        if (selectedOptIdx !== null && selectedOptIdx !== undefined) {
+          nextBtn.disabled = false;
+          if (currentQuizIndex === quizQuestions.length - 1) {
+            nextBtn.innerHTML = 'Lihat Lensa Kognitif & Rekomendasi <i class="fa-solid fa-chart-radar ml-2"></i>';
+          } else {
+            nextBtn.innerHTML = 'Lanjut <i class="fa-solid fa-arrow-right ml-2"></i>';
+          }
+        } else {
+          nextBtn.disabled = true;
+        }
+      }
+    }
+
+    function selectQuizOption(idx) {
+      quizAnswers[currentQuizIndex] = idx;
+      renderQuizQuestion();
+    }
+
+    function prevQuizQuestion() {
+      if (currentQuizIndex > 0) {
+        currentQuizIndex--;
+        renderQuizQuestion();
+      }
+    }
+
+    function nextQuizQuestion() {
+      if (currentQuizIndex < quizQuestions.length - 1) {
+        currentQuizIndex++;
+        renderQuizQuestion();
+      } else {
+        showToast("Kuis diagnostik selesai! Mengalkulasi rekomendasi personal...", "info");
+        checkBadgesProgress();
+        switchTab('hasil');
+      }
+    }
+
+    // =========================================================================
+    // 23. REKOMENDASI PASCA-KUIS ENGINE
+    // =========================================================================
+    function calculateQuizScores() {
+      let counts = { filosofi: 0, psikologi: 0, kuantum: 0 };
+      let answered = 0;
+
+      quizAnswers.forEach((ansIdx, qIdx) => {
+        if (ansIdx !== null && ansIdx !== undefined) {
+          const type = quizQuestions[qIdx].options[ansIdx].type;
+          counts[type]++;
+          answered++;
+        }
+      });
+
+      let pFilosofi = 33;
+      let pPsikologi = 33;
+      let pKuantum = 34;
+
+      if (answered > 0) {
+        pFilosofi = Math.round((counts.filosofi / answered) * 100);
+        pPsikologi = Math.round((counts.psikologi / answered) * 100);
+        pKuantum = Math.round((counts.kuantum / answered) * 100);
+      }
+
+      const filVal = document.getElementById('score-filosofi-val');
+      const filBar = document.getElementById('bar-filosofi-val');
+      const psiVal = document.getElementById('score-psikologi-val');
+      const psiBar = document.getElementById('bar-psikologi-val');
+      const quaVal = document.getElementById('score-kuantum-val');
+      const quaBar = document.getElementById('bar-kuantum-val');
+
+      if (filVal) filVal.innerText = `${pFilosofi}%`;
+      if (filBar) filBar.style.width = `${pFilosofi}%`;
+
+      if (psiVal) psiVal.innerText = `${pPsikologi}%`;
+      if (psiBar) psiBar.style.width = `${pPsikologi}%`;
+
+      if (quaVal) quaVal.innerText = `${pKuantum}%`;
+      if (quaBar) quaBar.style.width = `${pKuantum}%`;
+
+      renderRadarChart(pFilosofi, pPsikologi, pKuantum);
+
+      let archetypeTitle = "Sintergi Trias Pengetahuan";
+      let archetypeDesc = "Selesaikan kuis diagnostik 9 skenario untuk menampilkan pembacaan akurat porsi lensa berpikir Anda.";
+
+      if (answered > 0) {
+        if (counts.filosofi >= counts.psikologi && counts.filosofi >= counts.kuantum) {
+          archetypeTitle = "Arketipe: Socratic Rationalist (Sang Pembongkar Dogma)";
+          archetypeDesc = "Lensa kognitif Anda sangat mengagungkan kebenaran rasional, kejujuran logika, dan keberanian meragukan asumsi awal melalui Dialektika Sokratik.";
+        } else if (counts.psikologi >= counts.filosofi && counts.psikologi >= counts.kuantum) {
+          archetypeTitle = "Arketipe: Jungian Depth Explorer (Sang Penyelam Batin)";
+          archetypeDesc = "Lensa kognitif Anda peka terhadap simbolik bawah sadar, proyeksi emosional, dan memahami dunia luar sebagai refleksi perkembangan jiwa internal.";
+        } else if (counts.kuantum >= counts.filosofi && counts.kuantum >= counts.psikologi) {
+          archetypeTitle = "Arketipe: Quantum Observer (Sang Arsitek Potensi Realitas)";
+          archetypeDesc = "Lensa kognitif Anda terbuka pada probabilitas tak terbatas, non-lokalitas, dan menyadari bahwa kehadiran Pengamat (Observer) turut membentuk realitas fisik.";
+        }
+      }
+
+      const archTitleElem = document.getElementById('archetype-title');
+      const archDescElem = document.getElementById('archetype-desc');
+
+      if (archTitleElem) archTitleElem.innerText = archetypeTitle;
+      if (archDescElem) archDescElem.innerText = archetypeDesc;
+
+      const scoresArr = [
+        { domain: 'filosofi', score: pFilosofi, name: 'Filosofi Sokratik' },
+        { domain: 'psikologi', score: pPsikologi, name: 'Psikologi Jungian' },
+        { domain: 'kuantum', score: pKuantum, name: 'Fisika Kuantum' }
+      ];
+      scoresArr.sort((a, b) => a.score - b.score);
+
+      const lowest = scoresArr[0];
+      const highest = scoresArr[2];
+
+      renderPersonalizedCurriculum(lowest, highest);
+      renderDailyExercises(archetypeTitle);
+      renderActionPlan();
+    }
+
+    function renderPersonalizedCurriculum(lowest, highest) {
+      const container = document.getElementById('curriculum-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const recDb = {
+        filosofi: {
+          basic: ["Plato — 'Apology of Socrates' & 'Meno'", "Jostein Gaarder — 'Dunia Sophie'", "Nigel Warburton — 'A Little History of Philosophy'"],
+          advanced: ["Plato — 'The Republic' (Buku I & VII)", "Immanuel Kant — 'Critique of Pure Reason'", "René Descartes — 'Meditations on First Philosophy'"]
+        },
+        psikologi: {
+          basic: ["Carl Gustav Jung — 'Man and His Symbols'", "Viktor Frankl — 'Man's Search for Meaning'", "Robert A. Johnson — 'Owning Your Own Shadow'"],
+          advanced: ["Carl Gustav Jung — 'Aion: Phenomenology of the Self'", "C.G. Jung — 'The Archetypes and Collective Unconscious'", "Erich Neumann — 'The Origins and History of Consciousness'"]
+        },
+        kuantum: {
+          basic: ["Nick Herbert — 'Quantum Reality: Beyond the New Physics'", "Danah Zohar — 'The Quantum Self'", "Fritjof Capra — 'The Tao of Physics'"],
+          advanced: ["Werner Heisenberg — 'Physics and Philosophy'", "David Bohm — 'Wholeness and the Implicate Order'", "Niels Bohr — 'Atomic Physics and Human Knowledge'"]
+        }
+      };
+
+      const lowCard = document.createElement('div');
+      lowCard.className = 'glass-panel rounded-2xl p-5 border-l-4 border-rose-500 bg-slate-900/80 space-y-3';
+      lowCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded border border-rose-500/20">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i> Prioritas Penguatan (${lowest.score}%)
+          </span>
+          <span class="text-xs font-bold text-white">${lowest.name}</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Pilar <strong>${lowest.name}</strong> membutuhkan stimulasi tambahan untuk menyeimbangkan Lensa Kognitif Anda. Berikut rekomendasi kurikulum dari tingkat dasar hingga menengah:
+        </p>
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-white/5 space-y-2 text-xs">
+          <strong class="text-amber-400 block mb-1 font-semibold">Daftar Bacaan Wajib Dasar-Menengah:</strong>
+          <ul class="list-disc list-inside space-y-1 text-slate-300">
+            ${recDb[lowest.domain].basic.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      const highCard = document.createElement('div');
+      highCard.className = 'glass-panel rounded-2xl p-5 border-l-4 border-emerald-500 bg-slate-900/80 space-y-3';
+      highCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check mr-1"></i> Pendalaman Spesialis (${highest.score}%)
+          </span>
+          <span class="text-xs font-bold text-white">${highest.name}</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Pilar <strong>${highest.name}</strong> adalah kekuatan utama Anda. Asah potensi ini menuju tingkat penguasaan akademis-filosofis yang lebih mendalam:
+        </p>
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-white/5 space-y-2 text-xs">
+          <strong class="text-cyan-400 block mb-1 font-semibold">Daftar Karya Masterpiece Akademis:</strong>
+          <ul class="list-disc list-inside space-y-1 text-slate-300">
+            ${recDb[highest.domain].advanced.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      container.appendChild(lowCard);
+      container.appendChild(highCard);
+    }
+
+    function renderDailyExercises(archetype) {
+      const container = document.getElementById('daily-exercises-container');
+      if (!container) return;
+      container.innerHTML = `
+        <div class="p-3.5 rounded-xl bg-slate-900/70 border border-amber-500/30 text-xs space-y-1.5">
+          <div class="font-bold text-amber-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-scroll"></i> Latihan 1: Refleksi Elenchus Harian (Filosofi)
+          </div>
+          <p class="text-slate-300 leading-relaxed">Sebelum tidur, pilih 1 asumsi kuat Anda hari ini. Tanyakan 3 kali: <em>"Atas dasar logika apa saya memercayai hal tersebut?"</em> untuk menguji apakah ada kontradiksi.</p>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-900/70 border border-purple-500/30 text-xs space-y-1.5">
+          <div class="font-bold text-purple-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-masks-theater"></i> Latihan 2: Jurnal Integrasi Shadow (Psikologi)
+          </div>
+          <p class="text-slate-300 leading-relaxed">Catat momen saat Anda merasa sangat jengkel pada orang lain. Tanyakan: <em>"Apakah sifat orang tersebut sebenarnya adalah proyeksi Shadow yang belum saya terima dalam diri saya?"</em></p>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-900/70 border border-cyan-500/30 text-xs space-y-1.5">
+          <div class="font-bold text-cyan-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-atom"></i> Latihan 3: Mindful Quantum Observer (Kuantum)
+          </div>
+          <p class="text-slate-300 leading-relaxed">Luangkan 5 menit hening. Sadari bahwa tindakan Anda mengamati pikiran tanpa menghakimi sedang meruntuhkan fungsi gelombang potensi kecemasan menjadi kedamaian.</p>
+        </div>
+      `;
+    }
+
+    function renderActionPlan() {
+      const container = document.getElementById('action-plan-container');
+      if (!container) return;
+      const weeks = [
+        { week: 'Minggu 1', title: 'Pembersihan Asumsi (Aporia & Elenchus)', desc: 'Fokus meragukan dogma lama, mencatat kontradiksi diri di Jurnal Refleksi, dan membiasakan kondisi Aporia.' },
+        { week: 'Minggu 2', title: 'Pemetaan Jiwa & Shadow Work', desc: 'Mengenali Persona sosial, mencatat mimpi pagi hari, dan mengintegrasikan sifat-sifat tertekan batin.' },
+        { week: 'Minggu 3', title: 'Pengamatan Kuantum & Probabilitas', desc: 'Melatih sudut pandang Pengamat (Observer), melatih kesadaran superposisi potensi saat mengambil keputusan.' },
+        { week: 'Minggu 4', title: 'Sintergi Trias Pengetahuan', desc: 'Menyatukan rasionalitas Sokratik, kedalaman psikhe Jungian, dan kesadaran kuantum dalam tindakan sehari-hari.' }
+      ];
+
+      container.innerHTML = weeks.map(w => `
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-white/5 text-xs text-slate-300">
+          <span class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-extrabold text-[10px] shrink-0 border border-cyan-500/30">${w.week}</span>
+          <div>
+            <strong class="text-white block font-semibold mb-0.5">${w.title}</strong>
+            <p class="text-slate-400 leading-relaxed text-[11px]">${w.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderRadarChart(pFil, pPsi, pQua) {
+      const svg = document.getElementById('radarSvg');
+      if (!svg) return;
+
+      const cx = 130, cy = 130, r = 90;
+
+      // Minimum visual threshold 8% to prevent total chart collapse
+      const visFil = Math.max(pFil, 8);
+      const visPsi = Math.max(pPsi, 8);
+      const visQua = Math.max(pQua, 8);
+
+      const a1 = -Math.PI / 2;
+      const a2 = Math.PI / 6 + (2 * Math.PI / 3);
+      const a3 = Math.PI / 6;
+
+      function getPt(angle, valPercent) {
+        const dist = (valPercent / 100) * r;
+        return {
+          x: cx + dist * Math.cos(angle),
+          y: cy + dist * Math.sin(angle)
+        };
+      }
+
+      const pt1 = getPt(a1, visFil);
+      const pt2 = getPt(a2, visPsi);
+      const pt3 = getPt(a3, visQua);
+
+      let bgTris = '';
+      [0.25, 0.5, 0.75, 1.0].forEach(scale => {
+        const g1 = getPt(a1, scale * 100);
+        const g2 = getPt(a2, scale * 100);
+        const g3 = getPt(a3, scale * 100);
+        bgTris += `<polygon points="${g1.x},${g1.y} ${g2.x},${g2.y} ${g3.x},${g3.y}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`;
+      });
+
+      const max1 = getPt(a1, 100);
+      const max2 = getPt(a2, 100);
+      const max3 = getPt(a3, 100);
+
+      svg.innerHTML = `
+        ${bgTris}
+        <line x1="${cx}" y1="${cy}" x2="${max1.x}" y2="${max1.y}" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+        <line x1="${cx}" y1="${cy}" x2="${max2.x}" y2="${max2.y}" stroke="rgba(168,85,247,0.4)" stroke-width="1.5"/>
+        <line x1="${cx}" y1="${cy}" x2="${max3.x}" y2="${max3.y}" stroke="rgba(6,182,212,0.4)" stroke-width="1.5"/>
+
+        <polygon points="${pt1.x},${pt1.y} ${pt2.x},${pt2.y} ${pt3.x},${pt3.y}" fill="rgba(168,85,247,0.35)" stroke="#A855F7" stroke-width="2.5"/>
+
+        <circle cx="${pt1.x}" cy="${pt1.y}" r="4.5" fill="#F59E0B"/>
+        <circle cx="${pt2.x}" cy="${pt2.y}" r="4.5" fill="#A855F7"/>
+        <circle cx="${pt3.x}" cy="${pt3.y}" r="4.5" fill="#06B6D4"/>
+
+        <text x="${max1.x}" y="${max1.y - 12}" fill="#F59E0B" font-size="10" font-weight="bold" text-anchor="middle">Filosofi (${pFil}%)</text>
+        <text x="${max2.x - 15}" y="${max2.y + 16}" fill="#A855F7" font-size="10" font-weight="bold" text-anchor="middle">Psikologi (${pPsi}%)</text>
+        <text x="${max3.x + 15}" y="${max3.y + 16}" fill="#06B6D4" font-size="10" font-weight="bold" text-anchor="middle">Kuantum (${pQua}%)</text>
+      `;
+    }
+
+    // =========================================================================
+    // 24. JURNAL REFLEKSI DIGITAL LOGIC
+    // =========================================================================
+    function handleJournalSave(e) {
+      e.preventDefault();
+
+      const tagElem = document.getElementById('journal-tag');
+      const titleElem = document.getElementById('journal-title');
+      const contentElem = document.getElementById('journal-content');
+
+      if (!tagElem || !titleElem || !contentElem) return;
+
+      const tag = tagElem.value;
+      const title = titleElem.value.trim();
+      const content = contentElem.value.trim();
+
+      if (!title || !content) return;
+
+      const entry = {
+        id: Date.now(),
+        tag: tag,
+        title: title,
+        content: content,
+        date: new Date().toLocaleDateString('id-ID', {
+          day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        })
+      };
+
+      journalEntries.unshift(entry);
+      localStorage.setItem('symphonia_journals', JSON.stringify(journalEntries));
+
+      titleElem.value = '';
+      contentElem.value = '';
+
+      renderJournalEntries();
+      checkBadgesProgress();
+      showToast("Catatan refleksi berhasil disimpan!", "success");
+    }
+
+    function deleteJournalEntry(id) {
+      journalEntries = journalEntries.filter(item => item.id !== id);
+      localStorage.setItem('symphonia_journals', JSON.stringify(journalEntries));
+      renderJournalEntries();
+      showToast("Catatan refleksi berhasil dihapus.", "info");
+    }
+
+    function renderJournalEntries() {
+      const container = document.getElementById('journal-entries-list');
+      const badge = document.getElementById('journal-count-badge');
+      if (!container) return;
+
+      const searchVal = document.getElementById('journal-search') ? document.getElementById('journal-search').value.toLowerCase() : '';
+
+      const filtered = journalEntries.filter(item => 
+        item.title.toLowerCase().includes(searchVal) || 
+        item.content.toLowerCase().includes(searchVal) ||
+        item.tag.toLowerCase().includes(searchVal)
+      );
+
+      if (badge) badge.innerText = `${filtered.length} Catatan Tersimpan`;
+      container.innerHTML = '';
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel rounded-2xl p-8 text-center text-slate-400">
+            <i class="fa-solid fa-feather text-3xl mb-3 text-slate-600"></i>
+            <p class="text-xs">Belum ada catatan refleksi tersimpan.</p>
+            <p class="text-[10px] text-slate-500 mt-1">Gunakan formulir di sebelah kiri untuk merekam wawasan batin Anda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        let tagColor = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+        if (item.tag.includes('Jungian')) tagColor = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+        if (item.tag.includes('Kuantum')) tagColor = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+        if (item.tag.includes('Sintesis')) tagColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+
+        const card = document.createElement('div');
+        card.className = 'glass-panel rounded-2xl p-5 border-t border-white/10 relative group transition-all';
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border ${tagColor}">
+              ${item.tag}
+            </span>
+            <span class="text-[10px] text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${item.date}</span>
+          </div>
+          <h4 class="text-sm font-bold text-white mb-2">${item.title}</h4>
+          <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-line mb-4">${item.content}</p>
+          
+          <div class="flex justify-end pt-2 border-t border-white/5">
+            <button onclick="deleteJournalEntry(${item.id})" class="text-[11px] text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1 font-semibold">
+              <i class="fa-solid fa-trash-can text-[10px]"></i> Hapus Catatan
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function exportJournalTxt() {
+      if (journalEntries.length === 0) {
+        showToast("Tidak ada catatan untuk diekspor.", "info");
+        return;
+      }
+
+      let txtContent = "=========================================\n";
+      txtContent += "SYMPHONIA MENTIS — JURNAL REFLEKSI DIGITAL\n";
+      txtContent += "=========================================\n\n";
+
+      journalEntries.forEach((item, idx) => {
+        txtContent += `[${idx + 1}] ${item.title.toUpperCase()}\n`;
+        txtContent += `Domain: ${item.tag} | Tanggal: ${item.date}\n`;
+        txtContent += `-----------------------------------------\n`;
+        txtContent += `${item.content}\n\n`;
+      });
+
+      const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Symphonia_Mentis_Jurnal_${Date.now()}.txt`;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      showToast("Jurnal berhasil diekspor ke file TXT!", "success");
+    }
+
+    // =========================================================================
+    // 25. TOAST NOTIFICATION UTILITY
+    // =========================================================================
+    function showToast(message, type = "info") {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+
+      let icon = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+      if (type === 'info') icon = '<i class="fa-solid fa-circle-info text-cyan-400"></i>';
+
+      toast.className = 'glass-panel px-4 py-3 rounded-xl border border-white/10 shadow-2xl flex items-center gap-3 text-xs text-slate-200 pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300';
+      toast.innerHTML = `${icon} <span>${message}</span>`;
+
+      container.appendChild(toast);
+
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
